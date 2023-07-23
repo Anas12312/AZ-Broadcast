@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import { connect } from 'socket.io-client'
-const socket = connect("http://localhost:3000")
-function App() {
+import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../App.css'
+import { socketContext } from '../main'
+
+function MainMenu() {
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
+  const socket = useContext(socketContext)
+  const nav = useNavigate();
   const sendMessage = (message: string):void => {
     socket.emit("message_send", {
       message: message
@@ -15,10 +18,10 @@ function App() {
         setError(data.message)
     })
     socket.on('joined', (data) => {
-      setError(data.message)
+      nav('/room/' + data.roomId)
     })
     socket.on('created', (data) => {
-      setError(data.roomId)
+      nav('/room/' + data.roomId)
     })
 
   },[socket])
@@ -55,4 +58,4 @@ function App() {
   )
 }
 
-export default App
+export default MainMenu

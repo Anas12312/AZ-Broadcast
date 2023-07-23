@@ -35,7 +35,8 @@ io.on('connection', (socket) => {
         if(io.sockets.adapter.rooms.get(data.roomId)) {
             socket.join(data.roomId)
             socket.emit("joined", {
-                message: "done"
+                message: "done",
+                roomId: data.roomId
         })
         }else {
             socket.emit("error", {
