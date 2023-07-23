@@ -1,29 +1,55 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { connect } from 'socket.io-client'
 const socket = connect("http://localhost:3000")
 function App() {
+  const [code, setCode] = useState('')
+  const [error, setError] = useState('')
   const sendMessage = (message: string):void => {
     socket.emit("message_send", {
       message: message
     })
   }
   useEffect(()=>{
-    socket.on('message_recieved', (data) => {
-        let textarea = document.getElementById('area') as HTMLInputElement;
-        textarea.value = data.message;
+    socket.on('error', (data) => {
+        setError(data.message)
     })
+    socket.on('joined', (data) => {
+      setError(data.message)
+    })
+    socket.on('created', (data) => {
+      setError(data.roomId)
+    })
+
   },[socket])
   return (
-    <div className=''>
-      <div className='w-full h-full flex justify-center items-center flex-col border'>
-        <textarea id='area' className='border-2 border-black m-5' />
-        <div className='w-32 h-20 bg-red-400 rounded-md border border-black flex justify-center items-center hover:cursor-pointer text-white'
-        onClick={(e) => {
-          let textarea = document.getElementById('area') as HTMLInputElement;
-          sendMessage(textarea.value)
-          textarea.value = "";
-        }}>Done</div>
+    <div className='w-screen h-screen'>
+      <div className='w-full h-full flex justify-start items-center flex-col'>
+        <input
+         className='w-[21.5rem] h-10 p-2 pb-3 border border-black rounded-md'
+         value={code}
+         placeholder='Type the ID of the room'
+         onChange={(e)=>{
+          setCode(e.target.value)
+         }}
+        />
+        <div className='flex'>  
+          <div className='w-40 h-20 flex justify-center items-center 
+                        bg-gray-600 rounded-md text-white m-3 
+                          hover:cursor-pointer hover:bg-slate-500'
+               onClick={()=>{
+                socket.emit("join", {
+                  roomId: code
+                })
+               }}>Join Room</div>
+          <div className='w-40 h-20 flex justify-center items-center 
+                        bg-gray-600 rounded-md text-white m-3 
+                          hover:cursor-pointer hover:bg-slate-500'
+               onClick={()=>{
+                socket.emit("create")
+               }}>Create Room</div>
+        </div>
+        <div>{error}</div>
       </div>
     </div>
   )
