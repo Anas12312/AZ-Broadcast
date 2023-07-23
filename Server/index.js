@@ -11,13 +11,40 @@ const io = new socket.Server(server, {
         methods: ['GET', 'POST']
     }
 })
-
+function findRooms() {
+    var availableRooms = [];
+    var rooms = io.sockets.adapter.rooms;
+    if (rooms) {
+        for (var room in rooms) {
+            if (!rooms[room].hasOwnProperty(room)) {
+                availableRooms.push(room);
+            }
+        }
+    }
+    return availableRooms;
+}
 io.on('connection', (socket) => {
-    console.log("Client Connected")
-    socket.on("message_send", (data) => {
-        socket.broadcast.emit("message_recieved", {
-            message: data.message
+    socket.on('create', () => {
+        const roomId = parseInt(Math.random() * 1000000).toString()
+        socket.join(roomId)
+        socket.emit("created", {
+            roomId
         })
+    })
+    socket.on('join', (data) => {
+        if(io.sockets.adapter.rooms.get(data.roomId)) {
+            socket.join(data.roomId)
+            socket.emit("joined", {
+                message: "done"
+        })
+        }else {
+            socket.emit("error", {
+                message: "This Room Doesn't Exist"
+            })
+        }
+    })
+    socket.on("message_send", (data) => {
+        socket.join(data.message)
     })
 })
 
