@@ -30,6 +30,10 @@ io.on('connection', (socket) => {
         socket.emit("created", {
             roomId
         })
+        socket.emit("room-created", {
+            roomId,
+            members: Array.from(io.sockets.adapter.rooms.get(roomId))
+        })
     })
     socket.on('join', (data) => {
         if(io.sockets.adapter.rooms.get(data.roomId)) {
@@ -37,10 +41,23 @@ io.on('connection', (socket) => {
             socket.emit("joined", {
                 message: "done",
                 roomId: data.roomId
-        })
+            })
+            io.to(data.roomId).emit('member-joined', {
+                member: socket.id,
+                members: Array.from(io.sockets.adapter.rooms.get(data.roomId))
+            })
         }else {
             socket.emit("error", {
                 message: "This Room Doesn't Exist"
+            })
+        }
+    })
+    socket.on('leave', (data) => {
+        socket.leave(data.roomId)
+        if(io.sockets.adapter.rooms.get(data.roomId)) {
+            io.to(data.roomId).emit('member-left', {
+                member: socket.id,
+                members: Array.from(io.sockets.adapter.rooms.get(data.roomId))
             })
         }
     })

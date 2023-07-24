@@ -26,7 +26,7 @@ function MainMenu() {
 
   },[socket])
   return (
-    <div className='w-screen h-screen'>
+    <div className='w-full h-full'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
         <input
          className='w-[21.5rem] h-10 p-2 pb-3 border border-black rounded-md'
