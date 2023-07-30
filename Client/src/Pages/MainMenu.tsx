@@ -8,11 +8,6 @@ function MainMenu() {
   const [error, setError] = useState('')
   const socket = useContext(socketContext)
   const nav = useNavigate();
-  const sendMessage = (message: string):void => {
-    socket.emit("message_send", {
-      message: message
-    })
-  }
   useEffect(()=>{
     socket.on('error', (data) => {
         setError(data.message)

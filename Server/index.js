@@ -62,8 +62,28 @@ io.on('connection', (socket) => {
         }
     })
     socket.on("message_send", (data) => {
-        socket.join(data.message)
+        if(Array.from(io.sockets.adapter.rooms.get(data.roomId)).includes(socket.id)) {
+            socket.to(data.roomId).emit("message_recieved", {
+                message: data.message,
+                sender: socket.id
+            })
+        }
     })
+    socket.on("voice", function (data) {
+        var newData = data.audio.split(";");
+        newData[0] = "data:audio/ogg;";
+        newData = newData[0] + newData[1];
+
+        if(io.sockets.adapter.rooms.get(data.roomId)) {
+            for (const id in Array.from(io.sockets.adapter.rooms.get(data.roomId))) {
+                if (id != socket.id)
+                    socket.broadcast.to(data.roomId).emit("send", newData);
+            }
+        }
+
+    });
+
+
 })
 
 server.listen(3000, (server)=> {

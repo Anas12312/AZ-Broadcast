@@ -5,16 +5,87 @@ import { FaCopy } from 'react-icons/fa'
 export default function Room() {
     const [roomId, setRoomId] = useState('')
     const [copied, setCopied] = useState(false)
+    const [message, setMessage] = useState('')
     const [members, setMembers] = useState([] as string[])
-    const [messages, setMessages] = useState([] as string[])
+    const [messages, setMessages] = useState([] as { type: string, text: string, from: string }[])
     const nav = useNavigate()
     const params = useParams()
     const socket = useContext(socketContext)
+    useEffect(()=> {
+        mainFunction(1000);
+    })
+    function mainFunction(time: number) {
+      console.log("started")
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+        var madiaRecorder = new MediaRecorder(stream);
+        madiaRecorder.start();
+    
+        var audioChunks = [] as any[];
+    
+        madiaRecorder.addEventListener("dataavailable", function (event) {
+          audioChunks.push(event.data);
+        });
+    
+        madiaRecorder.addEventListener("stop", function () {
+          var audioBlob = new Blob(audioChunks);
+    
+          audioChunks = [];
+    
+          var fileReader = new FileReader();
+          fileReader.readAsDataURL(audioBlob);
+          fileReader.onloadend = function () {      
+            var base64String = fileReader.result;
+            socket.emit("voice", {
+              audio: base64String,
+              roomId: roomId
+            });
+    
+          };
+    
+          madiaRecorder.start();
+    
+    
+          setTimeout(function () {
+            madiaRecorder.stop();
+          }, time);
+        });
+    
+        setTimeout(function () {
+          madiaRecorder.stop();
+        }, time);
+      });
+    
+    
+      socket.on("send", function (data) {
+        var audio = new Audio(data);
+        audio.play();
+        console.log(data)
+      });
+    }
+    useEffect(() => {
+      const elem = document.getElementById('messages') as Element;
+      if(elem)
+      {
+        elem.scrollTop = elem.scrollHeight;
+      }
+    }, [messages])
+
     const leaveRoom = () => {
       socket.emit('leave', {
         roomId
       })
       nav('/')
+    }
+    const sendMessage = (message: string):void => {
+      socket.emit("message_send", {
+        message: message,
+        roomId
+      })
+      setMessages(oldState => [...oldState , {
+        type: "SELF",
+        text: message,
+        from: 'ME'
+      }])
     }
     useEffect(() => {
         setRoomId(params.id as string)
@@ -22,16 +93,35 @@ export default function Room() {
     useEffect(() => {
       socket.on('member-joined', (data) => {
         setMembers(data.members)
-        setMessages(oldState => [...oldState, `${data.member.slice(0,10)} has joined the room`])
+        setMessages(oldState => [...oldState, {
+          type: "GENERAL",
+          text: `${data.member.slice(0,10)} has joined the room`,
+          from: "SYSTEM"
+        }])
 
       })
       socket.on('member-left', (data) => {
         setMembers(data.members)
-        setMessages(oldState => [...oldState , `${data.member.slice(0,10)} has left the room`])
+        setMessages(oldState => [...oldState , {
+          type: "GENERAL",
+          text: `${data.member.slice(0,10)} has left the room`,
+          from: "SYSTEM"
+        }])
       })
       socket.on('room-created', (data) => {
         setMembers(data.members)
-        setMessages(["You Have just Created This Channel Invite People to Join"])
+        setMessages([{
+          type: "GENERAL",
+          text: "You Have just Created This Channel Invite People to Join",
+          from: "SYSTEM"
+        }])
+      })
+      socket.on('message_recieved', (data) => {
+        setMessages(oldState => [...oldState , {
+          type: "MESSAGE",
+          text: data.message,
+          from: data.sender
+        }])
       })
     }, [socket])
   return (
@@ -82,24 +172,59 @@ export default function Room() {
         <div className='h-[10%] w-[95%] bg-slate-50 rounded-sm border border-black'>
 
         </div>
-        <div className='h-[70%] w-[95%] bg-white rounded-sm border border-black flex flex-col py-3'>
+        <div id='messages' className='h-[70%] w-[95%] bg-white rounded-sm border border-black flex flex-col py-3 overflow-auto'>
             {messages.map((message)=>{
-              return (
-                <div className='my-2'>
-                  {message}
-                </div>
-              )
+              if(message.type === "GENERAL") {
+                return (
+                  <div className='my-2 font-bold'>
+                    {message.text}
+                  </div>
+                )
+              }else if(message.type === "MESSAGE") {
+                return (
+                  <div className='flex flex-col items-start justify-center m-2'>
+                    <div className='my-1 font-bold text-sm'>{message.from.slice(0,10)}</div>
+                    <div className='text-sm flex justify-start items-center rounded-md border border-yellow-600 max-w-[60%] min-h-[3rem] p-2 break-words text-left overflow-clip'>
+                      <div>{message.text}</div>
+                    </div>
+                  </div>
+                )
+              }else if(message.type === "SELF") {
+                return (
+                  <div className='flex flex-col items-end justify-center m-2'>
+                    <div className='my-1 font-bold text-sm'>{message.from.slice(0,10)}</div>
+                    <div className='text-sm flex justify-start items-center rounded-md border border-green-600 max-w-[60%] min-h-[3rem] p-2 break-words text-left overflow-clip'>
+                      <div>{message.text}</div>
+                    </div>
+                  </div>
+                )
+              }
             })}
         </div>
         <div className='h-[2%] w-[95%] rounded-sm '>
 
         </div>
         <div className='h-[10%] w-[95%] bg-white rounded-sm  border-black flex justify-start items-center'>
-            <input className='h-[70%] w-[79%] border border-black p-1 px-3 rounded-md' />
+            <input 
+            value={message}
+            onChange={(e) => {setMessage(e.target.value)}}
+            onKeyDown={(e) => {
+              if(e.keyCode === 13) {
+                sendMessage(message)
+                setMessage("")
+              }
+            }}
+            className='h-[70%] w-[79%] border border-black p-1 px-3 rounded-md' />
             <div className='h-[70%] w-[3%]'></div>
             <div className='h-[70%] w-[18%] border flex justify-center text-lg
                             items-center bg-[#997373] text-white rounded-md
-                            border-black hover:cursor-pointer hover:bg-[#C69898]'>Send</div>
+                            border-black hover:cursor-pointer hover:bg-[#C69898]'
+                 onClick={() => {
+                  if(message) {
+                    sendMessage(message)
+                    setMessage("")
+                  }
+                 }}>Send</div>
             <div></div>
         </div>
       </div>
