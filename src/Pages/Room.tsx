@@ -12,7 +12,7 @@ export default function Room() {
     const params = useParams()
     const socket = useContext(socketContext)
     useEffect(() => {
-        mainFunction(1000);
+        mainFunction(200);
     })
     function mainFunction(time: number) {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
