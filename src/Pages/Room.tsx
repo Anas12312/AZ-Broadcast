@@ -11,54 +11,7 @@ export default function Room() {
     const nav = useNavigate()
     const params = useParams()
     const socket = useContext(socketContext)
-    useEffect(() => {
-        mainFunction(200);
-    })
-    function mainFunction(time: number) {
-      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-        const madiaRecorder = new MediaRecorder(stream);
-        madiaRecorder.start();
-    
-        let audioChunks = [] as any[];
-    
-        madiaRecorder.addEventListener("dataavailable", function (event) {
-          audioChunks.push(event.data);
-        });
-        
-        madiaRecorder.addEventListener("stop", function () {
-          const audioBlob = new Blob(audioChunks);
-    
-          audioChunks = [];
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(audioBlob);
-          fileReader.onloadend = function () {      
-            const base64String = fileReader.result;
-            socket.emit("voice", {
-              audio: base64String,
-              roomId: roomId
-            });
-    
-          };
-    
-          madiaRecorder.start();
-    
-    
-          setTimeout(function () {
-            madiaRecorder.stop();
-          }, time);
-        });
-    
-        setTimeout(function () {
-          madiaRecorder.stop();
-        }, time);
-      });
-    
-      socket.on("send", function (data) {
-        const audio = new Audio(data);
-        audio.play();
-        console.log(data)
-      });
-    }
+
     useEffect(() => {
       const elem = document.getElementById('messages') as Element;
       if(elem)
@@ -89,10 +42,11 @@ export default function Room() {
     }, [])
     useEffect(() => {
       socket.on('member-joined', (data) => {
+        console.log(data)
         setMembers(data.members)
         setMessages(oldState => [...oldState, {
           type: "GENERAL",
-          text: `${data.member.slice(0,10)} has joined the room`,
+          text: `${data.memberUsername} has joined the room`,
           from: "SYSTEM"
         }])
 
@@ -101,7 +55,7 @@ export default function Room() {
         setMembers(data.members)
         setMessages(oldState => [...oldState , {
           type: "GENERAL",
-          text: `${data.member.slice(0,10)} has left the room`,
+          text: `${data.member} has left the room`,
           from: "SYSTEM"
         }])
       })
@@ -117,7 +71,7 @@ export default function Room() {
         setMessages(oldState => [...oldState , {
           type: "MESSAGE",
           text: data.message,
-          from: data.sender
+          from: data.senderUsername
         }])
       })
     }, [socket])
@@ -150,7 +104,7 @@ export default function Room() {
             {members.map((member) => {
               return (
                   <div className='flex items-start my-1 w-full'>
-                  {member.slice(0, 10)}
+                  {member}
                 </div>
               )
             })}
