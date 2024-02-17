@@ -11,30 +11,28 @@ export default function Room() {
     const nav = useNavigate()
     const params = useParams()
     const socket = useContext(socketContext)
-    useEffect(()=> {
+    useEffect(() => {
         mainFunction(1000);
     })
     function mainFunction(time: number) {
-      console.log("started")
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-        var madiaRecorder = new MediaRecorder(stream);
+        const madiaRecorder = new MediaRecorder(stream);
         madiaRecorder.start();
     
-        var audioChunks = [] as any[];
+        let audioChunks = [] as any[];
     
         madiaRecorder.addEventListener("dataavailable", function (event) {
           audioChunks.push(event.data);
         });
-    
+        
         madiaRecorder.addEventListener("stop", function () {
-          var audioBlob = new Blob(audioChunks);
+          const audioBlob = new Blob(audioChunks);
     
           audioChunks = [];
-    
-          var fileReader = new FileReader();
+          const fileReader = new FileReader();
           fileReader.readAsDataURL(audioBlob);
           fileReader.onloadend = function () {      
-            var base64String = fileReader.result;
+            const base64String = fileReader.result;
             socket.emit("voice", {
               audio: base64String,
               roomId: roomId
@@ -55,9 +53,8 @@ export default function Room() {
         }, time);
       });
     
-    
       socket.on("send", function (data) {
-        var audio = new Audio(data);
+        const audio = new Audio(data);
         audio.play();
         console.log(data)
       });
@@ -132,10 +129,10 @@ export default function Room() {
         </div>
         <div className='w-full h-[6%] text-xl flex justify-center items-center'> 
           <span className='mr-3 text-[#594646] font-bold  '>Room No: {roomId}</span> 
-          <span className='mt-1 text-[#594646] hover:cursor-pointer relative group' onMouseLeave={()=>{
+          <span className='mt-1 text-[#594646] hover:cursor-pointer relative group' onMouseLeave={() => {
             setCopied(false)
             navigator.clipboard.writeText(roomId)
-          }} onClick={()=> {
+          }} onClick={() => {
             setCopied(true)
           }}>
             <FaCopy size={18} />
@@ -173,7 +170,7 @@ export default function Room() {
 
         </div>
         <div id='messages' className='h-[70%] w-[95%] bg-white rounded-sm border border-black flex flex-col py-3 overflow-auto'>
-            {messages.map((message)=>{
+            {messages.map((message) => {
               if(message.type === "GENERAL") {
                 return (
                   <div className='my-2 font-bold'>

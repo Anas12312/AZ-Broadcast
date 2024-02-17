@@ -69,23 +69,20 @@ io.on('connection', (socket) => {
             })
         }
     })
+
     socket.on("voice", function (data) {
         var newData = data.audio.split(";");
         newData[0] = "data:audio/ogg;";
         newData = newData[0] + newData[1];
 
         if(io.sockets.adapter.rooms.get(data.roomId)) {
-            for (const id in Array.from(io.sockets.adapter.rooms.get(data.roomId))) {
-                if (id != socket.id)
-                    socket.broadcast.to(data.roomId).emit("send", newData);
-            }
+            socket.to(data.roomId).emit("send", newData);
         }
 
     });
 
-
 })
 
-server.listen(3000, (server)=> {
-    console.log("Server Running!")
+server.listen(8000, (server)=> {
+    console.log("Server Running on port: " + 8000)
 })
