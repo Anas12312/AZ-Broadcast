@@ -24,10 +24,12 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
-    width: 2000,
-    height: 2000,
-
+    autoHideMenuBar: true,
+    show: false,
+    titleBarStyle: 'customButtonsOnHover',
   })
+
+  
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
@@ -40,10 +42,15 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
+
+  return win
 }
 
 app.on('window-all-closed', () => {
   win = null
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  const win = createWindow();
+  win.maximize();
+})
