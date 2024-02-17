@@ -11,7 +11,7 @@ function MainMenu() {
   const nav = useNavigate();
   useEffect(() => {
     const savedUN = localStorage.getItem("username")
-    if(savedUN) {
+    if (savedUN) {
       socket.emit("change_name", {
         username: savedUN
       })
@@ -29,54 +29,46 @@ function MainMenu() {
 
   }, [socket, nav])
   return (
-    <div className='w-full h-full'>
+    <div className='w-screen h-screen'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
-        <input
-          className='w-[21.5rem] h-10 p-2 pb-3 border border-black rounded-md'
-          value={code}
-          placeholder='Type the ID of the room'
-          onChange={(e) => {
-            setCode(e.target.value)
-          }}
-        />
-        <div className='flex'>
-          <div className='w-40 h-20 flex justify-center items-center 
-                        bg-gray-600 rounded-md text-white m-3 
-                          hover:cursor-pointer hover:bg-slate-500'
+        <div className='w-full text-xl font-bold flex justify-center items-center  mt-10'>
+          <img className='w-52' src='../../images/logo.png' />
+        </div>
+        <div className='font-main text-4xl text-center mt-4'>
+          Free video calls and meeting rooms for everyone <br></br> to talk, play music, and hangout
+        </div>
+        <div className='font-main text-gray-600 text-center mt-8'>
+          AZ Broadcast Provides secure and easy-to-use video calls and meetings <br></br>with a music player for everyone, on any device
+        </div>
+        <div className='mt-5 text-red-600 font-bold'>{error}</div>
+        <div className='flex items-center'>
+          <div className='w-32 h-12 flex justify-center items-center 
+                        bg-gray-600 rounded-md text-white m-2 mr-6 font-bold
+                          hover:cursor-pointer hover:shadow hover:bg-gray-700'
+            onClick={() => {
+              socket.emit("create")
+            }}>New Room</div>
+
+          <input
+            className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-md'
+            value={code}
+            placeholder='Type the ID of the room'
+            onChange={(e) => {
+              setCode(e.target.value)
+            }}
+          />
+          <div className='w-12 h-12
+          
+           flex justify-center items-center 
+                        text-gray-600 rounded-md m-1 font-bold
+                          hover:cursor-pointer hover:text-gray-800'
             onClick={() => {
               socket.emit("join", {
                 roomId: code
               })
-            }}>Join Room</div>
-          <div className='w-40 h-20 flex justify-center items-center 
-                        bg-gray-600 rounded-md text-white m-3 
-                          hover:cursor-pointer hover:bg-slate-500'
-            onClick={() => {
-              socket.emit("create")
-            }}>Create Room</div>
+            }}>Join</div>
         </div>
-        <div>{error}</div>
-        <div>
-          <div>Change your Username</div>
-          <input
-            className='w-[21.5rem] h-10 p-2 pb-3 border border-black rounded-md'
-            value={username}
-            placeholder='Type the name you want'
-            onChange={(e) => {
-              setUsername(e.target.value)
-            }}
-          />
-          <div onClick={() => {
-            socket.emit('change_name', {
-              username
-            })
-            localStorage.setItem("username", username)
-          }} className='w-40 h-20 flex justify-center items-center 
-                        bg-gray-600 rounded-md text-white m-3 
-                        hover:cursor-pointer hover:bg-slate-500'>
-                          Save
-          </div>
-        </div>
+        
       </div>
     </div>
   )

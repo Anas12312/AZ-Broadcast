@@ -58,7 +58,7 @@ export default function Room() {
       setMembers(data.members)
       setMessages(oldState => [...oldState, {
         type: "GENERAL",
-        text: `${data.member} has left the room`,
+        text: `${data.memberUsername} has left the room`,
         from: "SYSTEM"
       }])
     })
