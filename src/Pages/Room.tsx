@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { socketContext } from '../main'
 import { FaCopy } from 'react-icons/fa'
 export default function Room() {
+  
   const [roomId, setRoomId] = useState('')
   const [copied, setCopied] = useState(false)
   const [message, setMessage] = useState('')
@@ -12,6 +13,7 @@ export default function Room() {
   const nav = useNavigate()
   const params = useParams()
   const socket = useContext(socketContext)
+
 
   useEffect(() => {
     const elem = document.getElementById('messages') as Element;
@@ -78,8 +80,12 @@ export default function Room() {
       }])
     })
   }, [socket])
+
+
   return (
-    <div className='w-full h-full flex justify-center items-center border border-black rounded-md'>
+    <div className='w-full h-full flex justify-center items-center border border-black'>
+
+
       <div className='h-[40rem] w-1/4  flex flex-col justify-start items-center'>
         <div>
           <div>Change your Username</div>
@@ -143,6 +149,8 @@ export default function Room() {
             onClick={leaveRoom}>Leave Room</div>
         </div>
       </div>
+
+
       <div className='h-[40rem] w-3/4 border-l border-black bg-white flex flex-col justify-center items-center '>
         <div className='h-[10%] w-[95%] bg-slate-50 rounded-sm border border-black'>
 
