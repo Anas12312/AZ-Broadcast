@@ -51,6 +51,9 @@ export default function Room() {
         }])
 
       })
+      socket.on('username_changed', (data) => {
+        setMembers(data.members)
+      })
       socket.on('member-left', (data) => {
         setMembers(data.members)
         setMessages(oldState => [...oldState , {

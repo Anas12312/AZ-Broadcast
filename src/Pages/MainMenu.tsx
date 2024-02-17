@@ -10,6 +10,13 @@ function MainMenu() {
   const socket = useContext(socketContext)
   const nav = useNavigate();
   useEffect(() => {
+    const savedUN = localStorage.getItem("username")
+    if(savedUN) {
+      socket.emit("change_name", {
+        username: savedUN
+      })
+      setUsername(savedUN)
+    }
     socket.on('error', (data) => {
       setError(data.message)
     })
@@ -54,7 +61,7 @@ function MainMenu() {
           <input
             className='w-[21.5rem] h-10 p-2 pb-3 border border-black rounded-md'
             value={username}
-            placeholder='Type the ID of the room'
+            placeholder='Type the name you want'
             onChange={(e) => {
               setUsername(e.target.value)
             }}
@@ -63,6 +70,7 @@ function MainMenu() {
             socket.emit('change_name', {
               username
             })
+            localStorage.setItem("username", username)
           }} className='w-40 h-20 flex justify-center items-center 
                         bg-gray-600 rounded-md text-white m-3 
                         hover:cursor-pointer hover:bg-slate-500'>
