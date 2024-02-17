@@ -3,7 +3,7 @@ import  React from 'react'
 import './index.css'
 import AppRouter from './AppRouter.tsx'
 import { connect } from 'socket.io-client'
-const socket = connect("https://chatty-planes-burn.loca.lt/")
+const socket = connect("https://olive-steaks-dress.loca.lt")
 export const socketContext = React.createContext(socket);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

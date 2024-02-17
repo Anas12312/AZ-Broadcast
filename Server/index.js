@@ -11,6 +11,9 @@ const io = new socket.Server(server, {
         methods: ['GET', 'POST']
     }
 })
+app.get("/" , (req,res) => {
+    res.send("Ali Yasser")
+})
 function findRooms() {
     var availableRooms = [];
     var rooms = io.sockets.adapter.rooms;
@@ -83,6 +86,6 @@ io.on('connection', (socket) => {
 
 })
 
-server.listen(8000, (server)=> {
-    console.log("Server Running on port: " + 8000)
+server.listen(3000, (server)=> {
+    console.log("Server Running on port: " + 3000)
 })
