@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { socketContext } from '../main'
 import { FaCopy } from 'react-icons/fa'
 export default function Room() {
-  
+
   const [roomId, setRoomId] = useState('')
   const [copied, setCopied] = useState(false)
   const [message, setMessage] = useState('')
@@ -42,6 +42,7 @@ export default function Room() {
   useEffect(() => {
     setRoomId(params.id as string)
   }, [])
+
   useEffect(() => {
     socket.on('member-joined', (data) => {
       console.log(data)
