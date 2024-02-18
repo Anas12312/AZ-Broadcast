@@ -22,21 +22,23 @@ export default function RoomNew() {
         })
     }, [])
     useEffect(() => {
-        const elem = document.getElementById('messages') as Element;
-        if (elem) {
-            elem.scrollTop = elem.scrollHeight;
-        }
+        // const elem = document.getElementById('messages') as Element;
+        // if (elem) {
+        //     elem.scrollTop = elem.scrollHeight;
+        // }
     }, [messages])
     const sendMessage = (message: string): void => {
-        socket.emit("message_send", {
-            message: message,
-            roomId
-        })
-        setMessages(oldState => [...oldState, {
-            type: "SELF",
-            text: message,
-            from: 'ME'
-        }])
+        if(message) {
+            socket.emit("message_send", {
+                message: message,
+                roomId
+            })
+            setMessages(oldState => [...oldState, {
+                type: "SELF",
+                text: message,
+                from: 'ME'
+            }])
+        }
     }
     useEffect(() => {
         setRoomId(params.id as string)
