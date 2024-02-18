@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function LoadingDefault() {
+export default function Loading() {
     let circleCommonClasses = 'h-2 w-2 bg-primary-1   rounded-full';
     return (
     <div className='bg-white bg-opacity-90 w-full h-full absolute z-50'>

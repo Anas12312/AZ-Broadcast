@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Components/Loading';
+import { BASE_URL, socketContext } from '../main';
 
 export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage }: { isOpen: boolean, setIsOpen: Function, oldUsername: string, OldImage: string }) {
 
@@ -9,9 +11,11 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const socket = useContext(socketContext);
+
   // Upload Image
   const [isFilePicked, setIsFilePicked] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null)
+  const [selectedFile, setSelectedFile] = useState<File>()
 
   useEffect(() => {
     setUsername(oldUsername);
@@ -25,7 +29,23 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
     setIsLoading(false);
   }
 
-  const handleSubmission = () => {
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      setError('No file')
+      return
+    }
+
+    if (event.target.files![0].type === 'image/jpeg' || event.target.files![0].type === 'image/png' || event.target.files![0].type === 'image/jpg') {
+      setSelectedFile(event.target.files![0]);
+      setIsFilePicked(true);
+      const output = document.getElementById('preview') as HTMLInputElement
+      output.src = URL.createObjectURL(event.target.files![0]);
+    } else {
+      setError("Image Type must be JPG, JPEG or PNG")
+    }
+  };
+
+  const handleSubmission = async () => {
     setIsLoading(true)
     if (selectedFile) {
       const formData = new FormData();
@@ -33,15 +53,14 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
       formData.append('file', selectedFile);
 
       fetch(
-        config.BASE_URL + '/upload',
+        BASE_URL + '/upload',
         {
           method: 'POST',
           body: formData,
         }
       )
-        .then((response) => response.json())
         .then((result) => {
-          update(result.message)
+          socket.emit('change_name', { username, result })
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -69,7 +88,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         }}
       >
         {isLoading && (
-          <LoadingDefault />
+          <Loading />
         )}
         <div><span className='text-sm ml-1 text-red-600 font-bold'>{error}</span></div>
 
@@ -90,7 +109,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         <div className='w-full'>
           <div className='w-full flex justify-center bg-secondary-3 rounded-md border border-primary-1 p-2 mb-1'>
             <div className='relative w-60 h-60 flex justify-center items-center rounded-full border-4 border-white'>
-              <img id='preview' className='object-cover w-full h-full flex-shrink-0 rounded-full' src={image ? image : ""}
+              <img id='preview' className='object-cover w-full h-full flex-shrink-0 rounded-full' src={image ? image : "./profile.png"}
               />
             </div>
           </div>
@@ -98,13 +117,13 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
             <input id='Res-Text' className='hidden'
               type='file'
               accept='.jpg, .jpeg, .png'
-              onChange={() => { }} />
+              onChange={changeHandler} />
             <label className='w-32 h-10 bg-primary-2 border-2 text-white flex justify-center items-center hover:cursor-pointer hover:bg-primary-1 trans' htmlFor='Res-Text'>Upload</label>
           </div>
         </div>
         <div className='w-full'>
           <button className="w-full  h-9 rounded-md border text-sm bg-primary-2 text-white hover:bg-primary-1 trans"
-            onClick={() => { }}
+            onClick={handleSubmission}
           >Save</button>
         </div>
       </Modal>

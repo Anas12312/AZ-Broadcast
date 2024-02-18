@@ -7,6 +7,8 @@ const socket = connect("https://webrtc-test-l40m.onrender.com/")
 // const socket = connect("http://localhost:4000")
 export const socketContext = React.createContext(socket);
 
+export const BASE_URL = 'http://localhost:4000'
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <socketContext.Provider value={socket}>
     <div className='w-screen h-screen'>
