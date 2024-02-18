@@ -5,9 +5,11 @@ import SettingsModal from '../Modals/SettingsModal'
 type ProfilePanel = {
     username: string,
     image: string
+    leaveRoom: Function
 }
 
-export default function ProfilePanel({ username, image }: ProfilePanel) {
+
+export default function ProfilePanel({ leaveRoom, username, image }: ProfilePanel) {
 
     const [settingsModal, setSettingModal] = useState(false);
 
@@ -32,6 +34,13 @@ export default function ProfilePanel({ username, image }: ProfilePanel) {
                         Status
                     </div>
 
+
+                <div onClick={() => {
+                    leaveRoom()
+                }} className='w-8 h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
+                    <img src='./icons/hangup.svg' className='w-6 h-6' />
+                </div>
+            </div >
 
                     <div className='w-8 h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
                         <img src='./icons/hangup.svg' className='w-6 h-6' />
