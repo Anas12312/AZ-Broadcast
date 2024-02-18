@@ -96,14 +96,14 @@ export default function RoomNew() {
                 <ProfilePanel leaveRoom={leaveRoom} username='Zyad' image='./profile.png' />
 
                 {/* Playlist */}
-                <div className='bg-slate-800 h-full w-[53%]'>
+                <div className='bg-[#2b2d33] h-full w-[53%]'>
 
                 </div>
 
                 {/* Chat */}
                 <Chat messages={messages} sendMessage={sendMessage} />
 
-                {/* <RoomInfo roomId={roomId} /> */}
+                <RoomInfo roomId={roomId} />
             </div>
         </div>
     )

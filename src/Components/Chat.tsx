@@ -12,8 +12,8 @@ export default function Chat({ messages, sendMessage }: chatProps) {
     const [chatInput, setChatInput] = useState('')
 
     return (
-        <div className='bg-slate-900 h-full w-[30%] font-main'>
-            <div id='messages' className='w-full h-[92%] pt-1 flex flex-col justify-start items-center space-y-1 overflow-y-scroll'>
+        <div className='bg-[#1e1f22] h-full w-[30%] font-main'>
+            <div id='messages' className='w-full h-[92%] pt-20 flex flex-col justify-start items-center space-y-1 overflow-y-scroll'>
                 {
                     messages.map((message) => {
                         if (message.type === "GENERAL") {
@@ -42,7 +42,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                     setChatInput('')
                 }}
             >
-                <input className='w-full h-full rounded-lg px-2 bg-slate-800 text-white outline-none font-main'
+                <input className='w-full h-full rounded-lg px-2 bg-[#383a40] text-white outline-none font-main'
                     placeholder='Message'
                     tabIndex={-1}
                     value={chatInput}
@@ -73,7 +73,7 @@ function Message({ username, image, content, timeStamp }: Message) {
                     <span className='w-fit text-slate-300 font-main select-none hover:underline hover:cursor-pointer'>
                         {username}
                     </span>
-                    <span className='select-none pl-2 text-sm text-slate-400'>
+                    <span className='select-none pl-2 text-xs text-slate-400'>
                         {timeStamp}
                     </span>
                 </div>

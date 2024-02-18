@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 export default function Members({ members = [] }: {members: Member[]} ) {
 
     return (
-        <div className='bg-slate-900 h-full w-[17%]'>
+        <div className='bg-[#1e1f22] h-full w-[17%]'>
 
             <div className=' flex flex-col space-y-1 pt-5 px-3 justify-start items-center'>
 
