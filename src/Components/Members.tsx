@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProfilePanel from './ProfilePanel'
-import { socketContext } from '../main';
-import { useParams } from 'react-router-dom';
 
 export default function Members({ members = [] }: {members: Member[]} ) {
 
@@ -15,10 +12,6 @@ export default function Members({ members = [] }: {members: Member[]} ) {
                         return <MemberCard {...member} key={i} />
                     })
                 }
-                <MemberCard username={'Zyad'} image={'./profile.png'} />
-                <MemberCard username={'Anazz'} image={'./profile.png'} />
-                <MemberCard username={'Zika'} image={'./profile.png'} />
-                <MemberCard username={'Ay ebn 3arsaaaaaaaaaaaaaaaaaaaaaa'} image={'./profile.png'} />
 
             </div>
         </div>
