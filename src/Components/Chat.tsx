@@ -1,22 +1,15 @@
 import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
-
-export default function Chat() {
+type chatProps = {
+    messages: {
+        type: string,
+        text: string,
+        from: string
+    }[],
+    sendMessage: Function
+}
+export default function Chat({ messages, sendMessage }: chatProps) {
 
     const [chatInput, setChatInput] = useState('')
-    const [messages, setMessages] = useState<Message[]>([
-        { username: 'Zyad', image: './profile.png', content: 'a7aaaaaaa', timeStamp: 'now' },
-        { username: 'Zyad', image: './profile.png', content: 'a7aaaaaaaaaaaaaaaaaaa', timeStamp: 'now' }
-    ])
-
-    const onChatSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        //Send
-
-        setChatInput('')
-
-        setMessages([...messages].concat({ username: 'Zyad', image: './profile.png', content: 'a7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', timeStamp: 'now' }))
-    }
 
     return (
         <div className='bg-slate-900 h-[92%] w-[30%]'>
@@ -25,8 +18,22 @@ export default function Chat() {
                 <div className='relative w-full h-full pt-1  '>
                     <div className='absolute w-full bottom-0 pr-3 flex flex-col justify-end items-center space-y-1 overflow-auto'>
                         {
-                            messages.map(message => {
-                                return <Message {...message} />
+                            messages.map((message) => {
+                                if (message.type === "GENERAL") {
+                                    return (
+                                        <div className='w-full my-2 flex justify-center items-center font-bold text-white'>
+                                            {message.text}
+                                        </div>
+                                    )
+                                } else if (message.type === "MESSAGE") {
+                                    return (
+                                        <Message content={message.text} username={message.from} image='../../public/profile.png' timeStamp='now' />
+                                    )
+                                } else if (message.type === "SELF") {
+                                    return (
+                                        <Message content={message.text} username={'you'} image='../../public/profile.png' timeStamp='now' />
+                                    )
+                                }
                             })
                         }
                     </div>
@@ -34,7 +41,10 @@ export default function Chat() {
 
 
                 <form className='h-[8%] w-full px-3 py-2 flex space-x-2'
-                    onSubmit={onChatSubmit}
+                    onSubmit={() => {
+                        sendMessage(chatInput)
+                        setChatInput('')
+                    }}
                 >
                     <input className='w-full h-full rounded-lg px-2 bg-slate-800 text-white outline-none font-main'
                         placeholder='Message'

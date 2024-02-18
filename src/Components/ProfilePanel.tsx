@@ -4,9 +4,10 @@ import React from 'react'
 type ProfilePanel = {
     username: string,
     image: string
+    leaveRoom: Function
 }
 
-export default function ProfilePanel({ username, image }: ProfilePanel) {
+export default function ProfilePanel({ leaveRoom, username, image }: ProfilePanel) {
     return (
         < div className='absolute bottom-0 left-0 h-28 w-[17%] bg-slate-200' >
 
@@ -18,7 +19,9 @@ export default function ProfilePanel({ username, image }: ProfilePanel) {
                 </div>
 
 
-                <div className='w-8 h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
+                <div onClick={() => {
+                    leaveRoom()
+                }} className='w-8 h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
                     <img src='./icons/hangup.svg' className='w-6 h-6' />
                 </div>
             </div >
