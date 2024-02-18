@@ -21,12 +21,12 @@ export default function RoomNew() {
             setMembers(data.members)
         })
     }, [])
-    useEffect(() => {
-        // const elem = document.getElementById('messages') as Element;
-        // if (elem) {
-        //     elem.scrollTop = elem.scrollHeight;
-        // }
-    }, [messages])
+   useEffect(() => {
+        const elem = document.getElementById('messages') as Element;
+        if (elem) {
+            elem.scrollTop = elem.scrollHeight;
+        }
+    }, [messages]) 
     const sendMessage = (message: string): void => {
         if(message) {
             socket.emit("message_send", {
@@ -103,7 +103,7 @@ export default function RoomNew() {
                 {/* Chat */}
                 <Chat messages={messages} sendMessage={sendMessage} />
 
-                <RoomInfo roomId={roomId} />
+                {/* <RoomInfo roomId={roomId} /> */}
             </div>
         </div>
     )
