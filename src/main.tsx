@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import React from 'react'
-import './index.css'
+import './styles/index.css'
 import AppRouter from './AppRouter.tsx'
 import { connect } from 'socket.io-client'
 // const socket = connect("https://webrtc-test-l40m.onrender.com/")

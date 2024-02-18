@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import '../App.css'
 import { socketContext } from '../main'
 
 function MainMenu() {
