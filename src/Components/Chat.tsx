@@ -15,7 +15,7 @@ export default function Chat() {
 
         setChatInput('')
 
-        setMessages([...messages].concat({ username: 'Zyad', image: './profile.png', content: 'a7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', timeStamp: 'now' }))
+        setMessages([...messages].concat({ username: 'Zyad', image: './profile.png', content: 'a7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaa7aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', timeStamp: 'now' }))
     }
 
     return (
