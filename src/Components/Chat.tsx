@@ -16,7 +16,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
             <div className='flex flex-col w-full h-full '>
 
                 <div className='relative w-full h-full pt-1  '>
-                    <div className='absolute w-full bottom-0 pr-3 flex flex-col justify-end items-center space-y-1 overflow-auto'>
+                    <div id='messages' className='absolute w-full bottom-0 pr-3 flex flex-col justify-end items-center space-y-1 overflow-y-scroll'>
                         {
                             messages.map((message) => {
                                 if (message.type === "GENERAL") {
