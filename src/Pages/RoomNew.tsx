@@ -26,12 +26,12 @@ export default function RoomNew() {
         })
     }, [])
 
-    useEffect(() => {
-        // const elem = document.getElementById('messages') as Element;
-        // if (elem) {
-        //     elem.scrollTop = elem.scrollHeight;
-        // }
-    }, [messages])
+   useEffect(() => {
+        const elem = document.getElementById('messages') as Element;
+        if (elem) {
+            elem.scrollTop = elem.scrollHeight;
+        }
+    }, [messages]) 
 
     const sendMessage = (message: string): void => {
         if(message) {
@@ -114,7 +114,7 @@ export default function RoomNew() {
                 {/* Chat */}
                 <Chat messages={messages} sendMessage={sendMessage} />
 
-                <RoomInfo roomId={roomId} />
+                {/* <RoomInfo roomId={roomId} /> */}
             </div>
         </div>
     )
