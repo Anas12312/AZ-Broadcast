@@ -15,7 +15,7 @@ export default function ProfilePanel({ leaveRoom, username, image }: ProfilePane
         setSettingModal(true);
     }
     return (
-        < div className='absolute bottom-0 left-0 h-28 w-[17%] bg-slate-200' >
+        < div className='absolute bottom-0 left-0 h-28 w-[17%] bg-[#383a40]' >
              <SettingsModal
                 isOpen={settingsModal}
                 setIsOpen={setSettingModal}
@@ -23,7 +23,7 @@ export default function ProfilePanel({ leaveRoom, username, image }: ProfilePane
                 OldImage={image}
             />
             {/* Status */}
-            < div className='h-[45%] bg-slate-950 flex justify-between items-center px-3' >
+            < div className='h-[45%] bg-[#15181f] flex justify-between items-center px-3' >
 
                 <div className='text-green-600 font-main select-none hover:cursor-pointer hover:underline'>
                     Status

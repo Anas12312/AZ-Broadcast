@@ -66,6 +66,7 @@ export default function RoomNew() {
 
     socket.on('room-created', onRoomCreated);
 
+
     socket.on('member-left', onMemberLeft);
 
     socket.on('username_changed', onUsernameChanged);
