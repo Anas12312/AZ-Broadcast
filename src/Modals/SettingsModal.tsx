@@ -1,27 +1,18 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import { useNavigate } from 'react-router-dom';
-import Loading from '../Components/Loading';
-import { BASE_URL, socketContext } from '../main';
+import { BASE_URL, socket } from '../Socket/socket';
 
 export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage }: { isOpen: boolean, setIsOpen: Function, oldUsername: string, OldImage: string }) {
 
-  const [username, setUsername] = useState('')
-  const [image, setImage] = useState('')
+  const [username, setUsername] = useState(oldUsername)
+  const [image, setImage] = useState(OldImage)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-
-  const socket = useContext(socketContext);
 
   // Upload Image
   const [isFilePicked, setIsFilePicked] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File>()
 
-  useEffect(() => {
-    setUsername(oldUsername);
-    setImage(OldImage);
-    setError('')
-  }, [])
 
   const closeModal = () => {
     setError(' ');
@@ -56,19 +47,23 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         BASE_URL + '/upload',
         {
           method: 'POST',
-          body: formData,
-          mode:  'no-cors'
+          body: formData
         }
       )
-        .then((result) => {
-          console.log('a7a1');
-          socket.emit('change_name', { username, result })
+        .then(async (result) => {
+          result = await result.json();
+
+          socket.emit('change_name', { username, image: (result as any).image })
+
+          localStorage.setItem('username', username)
+          localStorage.setItem('image', (result as any).image)
         })
         .catch((error) => {
-          console.error('Error:', error);
+          console.log('Error:', error);
         });
     } else {
       socket.emit('change_name', { username, image })
+      localStorage.setItem('username', username)
       closeModal()
     }
   };

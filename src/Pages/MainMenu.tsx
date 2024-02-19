@@ -1,10 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { socketContext } from '../main'
-
+import { socket } from '../Socket/socket';
 function MainMenu() {
-
-  const socket = useContext(socketContext)
   const nav = useNavigate();
 
   const [code, setCode] = useState('')
@@ -27,15 +24,28 @@ function MainMenu() {
   }
 
   useEffect(() => {
-    socket.on('error', (data) => {
+
+    function onError(data: any) {
       setError(data.message)
-    })
-    socket.on('joined', (data) => {
+    }
+ 
+    function onJoined(data: any) {
       nav('/room/' + data.roomId)
-    })
-    socket.on('created', (data) => {
+    }
+
+    function onCreated(data: any) {
       nav('/room/' + data.roomId)
-    })
+    }
+
+    socket.on('error', onError);
+    socket.on('joined', onJoined);
+    socket.on('created', onCreated);
+
+    return () => {
+      socket.off('error', onError);
+      socket.off('joined', onJoined);
+      socket.off('created', onCreated);        
+    }
 
   }, [])
 

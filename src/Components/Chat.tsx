@@ -12,23 +12,23 @@ export default function Chat({ messages, sendMessage }: chatProps) {
     const [chatInput, setChatInput] = useState('')
 
     return (
-        <div className='bg-slate-900 h-full w-[30%] font-main'>
+        <div className='bg-slate-900 w-[30%] h-[92%] font-main'>
             <div id='messages' className='w-full h-[92%] pt-1 flex flex-col justify-start items-center space-y-1 overflow-y-scroll'>
                 {
-                    messages.map((message) => {
+                    messages.map((message, i) => {
                         if (message.type === "GENERAL") {
                             return (
-                                <div className='w-full text-center my-2 flex justify-center items-center font-main font-bold text-white'>
+                                <div className='w-full text-center my-2 flex justify-center items-center font-main font-bold text-white' key={i}>
                                     {message.text}
                                 </div>
                             )
                         } else if (message.type === "MESSAGE") {
                             return (
-                                <Message content={message.text} username={message.from} image='../../public/profile.png' timeStamp='now' />
+                                <Message content={message.text} username={message.from} image={'./profile.png'} timeStamp='now' key={i}/>
                             )
                         } else if (message.type === "SELF") {
                             return (
-                                <Message content={message.text} username={'you'} image='../../public/profile.png' timeStamp='now' />
+                                <Message content={message.text} username={'you'} image='./profile.png' timeStamp='now' key={i}/>
                             )
                         }
                     })
@@ -37,7 +37,8 @@ export default function Chat({ messages, sendMessage }: chatProps) {
 
 
             <form className='h-[8%] w-full px-3 py-2 flex space-x-2'
-                onSubmit={() => {
+                onSubmit={(e) => {
+                    e.preventDefault()
                     sendMessage(chatInput)
                     setChatInput('')
                 }}
