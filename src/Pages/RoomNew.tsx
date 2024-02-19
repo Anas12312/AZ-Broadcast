@@ -55,6 +55,7 @@ export default function RoomNew() {
     }
 
     function onMessageRecieved(data: any) {
+      console.log("data")
       setMessages(oldState => [...oldState, {
         type: "MESSAGE",
         text: data.message,
@@ -92,7 +93,8 @@ export default function RoomNew() {
   const sendMessage = (message: string): void => {
     if (message) {
       socket.emit("message_send", {
-
+        roomId,
+        message
       })
       setMessages(oldState => [...oldState, {
         type: "SELF",
