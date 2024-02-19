@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FaCopy } from 'react-icons/fa'
 
 export default function RoomInfo({ roomId }: { roomId: string }) {

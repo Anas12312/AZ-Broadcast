@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function Loading() {
     let circleCommonClasses = 'h-2 w-2 bg-primary-1   rounded-full';
