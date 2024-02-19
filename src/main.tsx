@@ -1,15 +1,11 @@
 import ReactDOM from 'react-dom/client'
-import  React from 'react'
-import './index.css'
-import AppRouter from './AppRouter.tsx'
-import { connect } from 'socket.io-client'
-const socket = connect("https://fb65-41-238-165-91.ngrok-free.app/")
-export const socketContext = React.createContext(socket);
+import './styles/index.css'
+import AppRouter from './router/AppRouter.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <socketContext.Provider value={socket}>
+  <div className='w-screen h-screen'>
     <AppRouter />
-  </socketContext.Provider>
+  </div>
 )
 
 postMessage({ payload: 'removeLoading' }, '*')

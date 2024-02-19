@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'main';
+  font-style: normal;
+  font-weight: normal;
+  src: local('main'), url('./fonts/main.woff2') format('woff2');
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #303030;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #23244b;
+  border-radius: 5px;
+}
+
+@layer components {
+  .title {
+    @apply  w-auto p-2 m-2 min-w-max right-14 rounded-md shadow-md text-black bg-gray-200 text-xs font-bold transition-all duration-100 scale-0 origin-left;
+  }
+
+  .done-title {
+    @apply  w-auto p-2 m-2 min-w-max right-10 rounded-md shadow-md text-white bg-green-500 text-xs font-bold transition-all duration-100 scale-0 origin-left;
+  }
+}
+
+
+.ReactModal__Overlay {
+  opacity: 0;
+
+  transition: opacity 300ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
