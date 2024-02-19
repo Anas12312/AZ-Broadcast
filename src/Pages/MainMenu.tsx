@@ -3,19 +3,30 @@ import { useNavigate } from 'react-router-dom'
 import { socketContext } from '../main'
 
 function MainMenu() {
-  const [code, setCode] = useState('')
-  const [error, setError] = useState('')
-  const [username, setUsername] = useState('')
+
   const socket = useContext(socketContext)
   const nav = useNavigate();
+
+  const [code, setCode] = useState('')
+  const [error, setError] = useState('')
+  const [username, setUsername] = useState(localStorage.getItem('username') || '')
+  const [image, setImage] = useState(localStorage.getItem('image') || '')
+
+  const onSubmitUserData = () => {
+    socket.emit('change_name', { username, image });
+    localStorage.setItem('image', image)
+    localStorage.setItem('username', username)
+  }
+
+  const createRoom = () => {
+    socket.emit('create');
+  }
+
+  const joinRoom = () => {
+    socket.emit('join', { roomId: code });
+  }
+
   useEffect(() => {
-    const savedUN = localStorage.getItem("username")
-    if (savedUN) {
-      socket.emit("change_name", {
-        username: savedUN
-      })
-      setUsername(savedUN)
-    }
     socket.on('error', (data) => {
       setError(data.message)
     })
@@ -26,8 +37,33 @@ function MainMenu() {
       nav('/room/' + data.roomId)
     })
 
-  }, [socket, nav])
-  return (
+  }, [])
+
+
+  return (<>
+    <form
+      className='flex flex-col absolute bottom-0 left-0 space-y-1 bg-slate-700 p-4 border border-slate-800 rounded-tr-xl'
+    >
+      <label className='text-white' >Username</label>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className='pl-1'
+      />
+
+      <label className='text-white'>Image</label>
+      <input
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+        className='pl-1'
+      />
+
+      <button
+        className='w-full bg-slate-200 border-2 border-slate-800 rounded-md'
+        onClick={onSubmitUserData}
+      >Save</button>
+    </form>
+
     <div className='w-screen h-screen'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
         <div className='w-full text-xl font-bold flex justify-center items-center  mt-10'>
@@ -44,9 +80,7 @@ function MainMenu() {
           <div className='w-32 h-12 flex justify-center items-center 
                         bg-gray-600 rounded-md text-white m-2 mr-6 font-bold
                           hover:cursor-pointer hover:shadow hover:bg-gray-700'
-            onClick={() => {
-              socket.emit("create")
-            }}>New Room</div>
+            onClick={createRoom}>New Room</div>
 
           <input
             className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-md'
@@ -61,16 +95,12 @@ function MainMenu() {
            flex justify-center items-center 
                         text-gray-600 rounded-md m-1 font-bold
                           hover:cursor-pointer hover:text-gray-800'
-            onClick={() => {
-              socket.emit("join", {
-                roomId: code
-              })
-            }}>Join</div>
+            onClick={joinRoom}>Join</div>
         </div>
-        
+
       </div>
     </div>
-  )
+  </>)
 }
 
 export default MainMenu

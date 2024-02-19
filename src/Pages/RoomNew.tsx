@@ -14,6 +14,10 @@ export default function RoomNew() {
     const params = useParams();
     const nav = useNavigate()
     const [roomId, setRoomId] = useState('000000')
+
+    const [username, setUsername] = useState(localStorage.getItem('username')!)
+    const [image, setImage] = useState(localStorage.getItem('image')!)
+
     useEffect(() => {
         setRoomId(params.id as string);
         socket.on('member-joined', (data) => {
@@ -21,12 +25,14 @@ export default function RoomNew() {
             setMembers(data.members)
         })
     }, [])
+
     useEffect(() => {
         // const elem = document.getElementById('messages') as Element;
         // if (elem) {
         //     elem.scrollTop = elem.scrollHeight;
         // }
     }, [messages])
+
     const sendMessage = (message: string): void => {
         if(message) {
             socket.emit("message_send", {
@@ -40,15 +46,18 @@ export default function RoomNew() {
             }])
         }
     }
+
     useEffect(() => {
         setRoomId(params.id as string)
       }, [])
+      
     const leaveRoom = () => {
         socket.emit('leave', {
             roomId
         })
         nav('/')
     }
+    
     useEffect(() => {
         socket.on('member-joined', (data) => {
           setMembers(data.members)
@@ -86,6 +95,8 @@ export default function RoomNew() {
           }])
         })
       }, [socket])
+
+
     return (
         <div className='relative bg-white w-full h-full'>
             <div className='flex justify-center items-end w-full h-full'>

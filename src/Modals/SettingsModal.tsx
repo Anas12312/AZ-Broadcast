@@ -57,15 +57,18 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         {
           method: 'POST',
           body: formData,
+          mode:  'no-cors'
         }
       )
         .then((result) => {
+          console.log('a7a1');
           socket.emit('change_name', { username, result })
         })
         .catch((error) => {
           console.error('Error:', error);
         });
     } else {
+      socket.emit('change_name', { username, image })
       closeModal()
     }
   };
@@ -87,9 +90,9 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
           }
         }}
       >
-        {isLoading && (
+        {/* {isLoading && (
           <Loading />
-        )}
+        )} */}
         <div><span className='text-sm ml-1 text-red-600 font-bold'>{error}</span></div>
 
         <div className='w-full flex justify-center items-start h-20'>
@@ -102,6 +105,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
             className=' w-full bg-slate-700 h-10 outline-none rounded-lg px-2'
             type='text'
             value={username}
+            onChange={(e) => { setUsername(e.target.value) }}
           />
         </div>
 
