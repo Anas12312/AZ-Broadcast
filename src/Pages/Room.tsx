@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { socketContext } from '../main'
 import { FaCopy } from 'react-icons/fa'
+import { socket } from '../Socket/socket'
 export default function Room() {
 
   const [roomId, setRoomId] = useState('')
@@ -12,7 +12,7 @@ export default function Room() {
   const [username, setUsername] = useState([] as string[])
   const nav = useNavigate()
   const params = useParams()
-  const socket = useContext(socketContext)
+
 
 
   useEffect(() => {

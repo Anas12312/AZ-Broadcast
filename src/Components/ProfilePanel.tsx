@@ -46,7 +46,7 @@ export default function ProfilePanel({ leaveRoom, username, image }: ProfilePane
                         <img src={image} className='w-8 h-8 rounded-full object-cover'/>
                     </div>
 
-                    <div className='font-main text-white select-none'>
+                    <div className='text-xs font-main text-white select-none truncate ' title={username}>
                         {username}
                     </div>
 
