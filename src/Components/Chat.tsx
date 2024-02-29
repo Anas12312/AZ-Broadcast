@@ -26,7 +26,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                             )
                         } else if (message.type === "MESSAGE") {
                             return (
-                                <Message content={message.text} username={message.from} image={'./profile.png'} timeStamp='now' key={i}/>
+                                <Message content={message.text} username={message.from} image={message.image} timeStamp='now' key={i}/>
                             )
                         } else if (message.type === "SELF") {
                             return (
