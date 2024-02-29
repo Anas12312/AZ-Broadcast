@@ -1,16 +1,16 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import Modal from 'react-modal'
 import { BASE_URL, socket } from '../Socket/socket';
 
 export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage }: { isOpen: boolean, setIsOpen: Function, oldUsername: string, OldImage: string }) {
 
   const [username, setUsername] = useState(oldUsername)
-  const [image, setImage] = useState(OldImage)
+  const [image, _setImage] = useState(OldImage)
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [_isLoading, setIsLoading] = useState(false)
 
   // Upload Image
-  const [isFilePicked, setIsFilePicked] = useState(false)
+  const [_isFilePicked, setIsFilePicked] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File>()
 
 

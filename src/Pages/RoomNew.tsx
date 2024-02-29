@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import ProfilePanel from '../Components/ProfilePanel'
 import Chat from '../Components/Chat'
