@@ -4,14 +4,15 @@
 // import { socket } from '../Socket/socket'
 // export default function Room() {
 
-//   const [roomId, setRoomId] = useState('')
-//   const [copied, setCopied] = useState(false)
-//   const [message, setMessage] = useState('')
-//   const [members, setMembers] = useState([] as string[])
-//   const [messages, setMessages] = useState([] as { type: string, text: string, from: string }[])
-//   const [username, setUsername] = useState([] as string[])
-//   const nav = useNavigate()
-//   const params = useParams()
+  const [roomId, setRoomId] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [message, setMessage] = useState('')
+  const [members, setMembers] = useState([] as string[])
+  const [messages, setMessages] = useState([] as { type: string, text: string, from: string}[])
+  const [username, setUsername] = useState([] as string[])
+  const nav = useNavigate()
+  const params = useParams()
+
 
 
 
@@ -53,34 +54,35 @@
 //         from: "SYSTEM"
 //       }])
 
-//     })
-//     socket.on('username_changed', (data) => {
-//       setMembers(data.members)
-//     })
-//     socket.on('member-left', (data) => {
-//       setMembers(data.members)
-//       setMessages(oldState => [...oldState, {
-//         type: "GENERAL",
-//         text: `${data.memberUsername} has left the room`,
-//         from: "SYSTEM"
-//       }])
-//     })
-//     socket.on('room-created', (data) => {
-//       setMembers(data.members)
-//       setMessages([{
-//         type: "GENERAL",
-//         text: "You Have just Created This Channel Invite People to Join",
-//         from: "SYSTEM"
-//       }])
-//     })
-//     socket.on('message_recieved', (data) => {
-//       setMessages(oldState => [...oldState, {
-//         type: "MESSAGE",
-//         text: data.message,
-//         from: data.senderUsername
-//       }])
-//     })
-//   }, [socket])
+    })
+    socket.on('username_changed', (data) => {
+      setMembers(data.members)
+    })
+    socket.on('member-left', (data) => {
+      setMembers(data.members)
+      setMessages(oldState => [...oldState, {
+        type: "GENERAL",
+        text: `${data.memberUsername} has left the room`,
+        from: "SYSTEM"
+      }])
+    })
+    socket.on('room-created', (data) => {
+      setMembers(data.members)
+      setMessages([{
+        type: "GENERAL",
+        text: "You Have just Created This Channel Invite People to Join",
+        from: "SYSTEM"
+      }])
+    })
+    socket.on('message_recieved', (data) => {
+      setMessages(oldState => [...oldState, {
+        type: "MESSAGE",
+        text: data.message,
+        from: data.senderUsername,
+
+      }])
+    })
+  }, [socket])
 
 
 //   return (

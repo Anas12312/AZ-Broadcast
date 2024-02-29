@@ -3,7 +3,8 @@ type chatProps = {
     messages: {
         type: string,
         text: string,
-        from: string
+        from: string,
+        image: string
     }[],
     sendMessage: Function
 }
@@ -29,7 +30,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                             )
                         } else if (message.type === "SELF") {
                             return (
-                                <Message content={message.text} username={'you'} image='./profile.png' timeStamp='now' key={i}/>
+                                <Message content={message.text} username={'you'} image={message.image} timeStamp='now' key={i}/>
                             )
                         }
                     })
