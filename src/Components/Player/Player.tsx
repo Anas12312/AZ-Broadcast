@@ -46,7 +46,7 @@ export default function Player({roomId}: props) {
                     setLoading(false)
                 }} />
             </div> */}
-            <audio controls >
+            <audio autoPlay>
                 <source src={BASE_URL + "/stream/" + roomId} type='audio/webm' />
             </audio>
         </div>

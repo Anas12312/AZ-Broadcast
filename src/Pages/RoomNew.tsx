@@ -4,7 +4,7 @@ import ProfilePanel from '../Components/ProfilePanel'
 import Chat from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
-import { socket } from '../Socket/socket'
+import { BASE_URL, socket } from '../Socket/socket'
 import Player from '../Components/Player/Player'
 
 export default function RoomNew() {
@@ -20,7 +20,7 @@ export default function RoomNew() {
   const [image, setImage] = useState(localStorage.getItem('image')!)
 
   useEffect(() => {
-
+    fetch(BASE_URL + '/start' + roomId)
     function onMemberJoined(data: any) {
       setMembers(data.members)
       setMessages(oldState => [...oldState, {
