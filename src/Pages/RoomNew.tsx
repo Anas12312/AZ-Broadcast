@@ -20,7 +20,6 @@ export default function RoomNew() {
   const [image, setImage] = useState(localStorage.getItem('image')!)
 
   useEffect(() => {
-    fetch(BASE_URL + '/start/' + roomId)
     function onMemberJoined(data: any) {
       setMembers(data.members)
       setMessages(oldState => [...oldState, {
