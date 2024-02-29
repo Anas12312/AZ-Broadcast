@@ -5,15 +5,16 @@ import Chat from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import { socket } from '../Socket/socket'
+import Player from '../Components/Player/Player'
 
 export default function RoomNew() {
 
   const [members, setMembers] = useState<Member[]>([])
-  const [messages, setMessages] = useState([] as { type: string, text: string, from: string }[])
+  const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string  }[])
   const params = useParams();
   const nav = useNavigate()
 
-  const roomId = params.id;
+  const roomId = params.id!;
 
   const [username, setUsername] = useState(localStorage.getItem('username')!)
   const [image, setImage] = useState(localStorage.getItem('image')!)
@@ -25,7 +26,8 @@ export default function RoomNew() {
       setMessages(oldState => [...oldState, {
         type: "GENERAL",
         text: `${data.memberUsername} has joined the room`,
-        from: "SYSTEM"
+        from: "SYSTEM",
+        image: "anas"
       }])
     }
 
@@ -40,7 +42,8 @@ export default function RoomNew() {
       setMessages(oldState => [...oldState, {
         type: "GENERAL",
         text: `${data.memberUsername} has left the room`,
-        from: "SYSTEM"
+        from: "SYSTEM",
+        image: "anas"
       }])
     }
 
@@ -50,7 +53,8 @@ export default function RoomNew() {
       setMessages([{
         type: "GENERAL",
         text: "You Have just Created This Channel Invite People to Join",
-        from: "SYSTEM"
+        from: "SYSTEM",
+        image: "anas"
       }])
     }
 
@@ -59,7 +63,8 @@ export default function RoomNew() {
       setMessages(oldState => [...oldState, {
         type: "MESSAGE",
         text: data.message,
-        from: data.senderUsername
+        from: data.senderUsername,
+        image: data.senderImage
       }])
     }
 
@@ -99,7 +104,8 @@ export default function RoomNew() {
       setMessages(oldState => [...oldState, {
         type: "SELF",
         text: message,
-        from: 'ME'
+        from: 'ME',
+        image: image
       }])
     }
   }
@@ -132,7 +138,7 @@ export default function RoomNew() {
 
         {/* Playlist */}
         <div className='bg-slate-800 h-full w-[53%]'>
-
+          <Player roomId={roomId} />
         </div>
 
         {/* Chat */}

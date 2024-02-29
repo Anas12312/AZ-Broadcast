@@ -8,7 +8,7 @@ export default function Room() {
   const [copied, setCopied] = useState(false)
   const [message, setMessage] = useState('')
   const [members, setMembers] = useState([] as string[])
-  const [messages, setMessages] = useState([] as { type: string, text: string, from: string }[])
+  const [messages, setMessages] = useState([] as { type: string, text: string, from: string}[])
   const [username, setUsername] = useState([] as string[])
   const nav = useNavigate()
   const params = useParams()
@@ -77,7 +77,8 @@ export default function Room() {
       setMessages(oldState => [...oldState, {
         type: "MESSAGE",
         text: data.message,
-        from: data.senderUsername
+        from: data.senderUsername,
+
       }])
     })
   }, [socket])
