@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BASE_URL, socket } from '../Socket/socket';
+import { socket } from '../Socket/socket';
 function MainMenu() {
   const nav = useNavigate();
 
@@ -34,7 +34,7 @@ function MainMenu() {
     }
 
     function onCreated(data: any) {
-      fetch(BASE_URL + '/start/' + data.roomId)
+      // fetch(BASE_URL + '/start/' + data.roomId)
       nav('/room/' + data.roomId)
     }
 
