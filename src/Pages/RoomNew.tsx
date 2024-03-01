@@ -4,7 +4,7 @@ import ProfilePanel from '../Components/ProfilePanel'
 import Chat from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
-import { BASE_URL, socket } from '../Socket/socket'
+import { socket } from '../Socket/socket'
 import Player from '../Components/Player/Player'
 
 export default function RoomNew() {

@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import ReactPlayer from 'react-player'
+import { useState } from 'react'
 import { Circles } from 'react-loader-spinner'
 import { BASE_URL } from '../../Socket/socket'
 
@@ -9,7 +8,7 @@ interface props {
 
 export default function Player({roomId}: props) {
     const [volume, setVolume] = useState(50)
-    const [loading, setLoading] = useState(true)
+    const [loading, _] = useState(true)
     const [defean, setDefean] = useState(1)
     const togglePlay = () => {
         if(defean) {
