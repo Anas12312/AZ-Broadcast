@@ -34,7 +34,6 @@ function MainMenu() {
     }
 
     function onCreated(data: any) {
-      // fetch(BASE_URL + '/start/' + data.roomId)
       nav('/room/' + data.roomId)
     }
 

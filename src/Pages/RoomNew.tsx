@@ -6,6 +6,7 @@ import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import { socket } from '../Socket/socket'
 import Player from '../Components/Player/Player'
+import Music from '../Components/Player/Music'
 
 export default function RoomNew() {
 
@@ -136,9 +137,7 @@ export default function RoomNew() {
         <ProfilePanel leaveRoom={leaveRoom} username={username} image={image} />
 
         {/* Playlist */}
-        <div className='bg-slate-800 h-full w-[53%]'>
-          <Player roomId={roomId} />
-        </div>
+        <Music roomId={roomId} />
 
         {/* Chat */}
         <Chat messages={messages} sendMessage={sendMessage} />
