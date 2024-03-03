@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Player from './Player'
 import Queue from './Queue'
 import { track } from './Track'
-import { BASE_URL } from '../../Socket/socket'
+import { BASE_URL, socket } from '../../Socket/socket'
 import Search from './Search'
 
 export default function Music({ roomId }: { roomId: string }) {
@@ -12,7 +12,7 @@ export default function Music({ roomId }: { roomId: string }) {
     const audioRef = useRef<HTMLAudioElement>(null)
     audioRef.current?.addEventListener("loadeddata", () => setBusy(false))
     const refreshQueue = async () => {
-        const response = await fetch(BASE_URL + '/queue/' + roomId)
+        const response = await fetch(BASE_URL + '/queue/' + roomId + "/" + socket.id)
         const newQueue = await response.json()
         if(newQueue.tracks) {
             setQueue(newQueue.tracks)
@@ -44,6 +44,11 @@ export default function Music({ roomId }: { roomId: string }) {
     const deleteTrack = (url: string) => {
 
     }
+    useEffect(() => {
+        socket.on("track_added", () => {
+            refreshQueue()
+        })  
+    })
     return (
         <div className='bg-slate-800 h-full w-[53%]'>
             <div className='w-full h-[86%] flex'>
