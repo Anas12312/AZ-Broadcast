@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ReactPlayer from 'react-player'
+import React, { useEffect, useState } from 'react'
 import { Circles } from 'react-loader-spinner'
 import { BASE_URL, socket } from '../../Socket/socket'
 
@@ -13,7 +12,7 @@ interface props {
 
 export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
     const [volume, setVolume] = useState(50)
-    const [loading, setLoading] = useState(false)
+    const [loading, _setLoading] = useState(false)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
     const [loop, setLoop] = useState("")

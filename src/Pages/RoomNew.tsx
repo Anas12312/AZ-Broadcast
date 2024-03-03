@@ -5,7 +5,6 @@ import Chat from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import { socket } from '../Socket/socket'
-import Player from '../Components/Player/Player'
 import Music from '../Components/Player/Music'
 
 export default function RoomNew() {

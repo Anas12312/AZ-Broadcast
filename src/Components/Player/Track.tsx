@@ -1,4 +1,4 @@
-import React, { DragEventHandler } from 'react'
+import { DragEventHandler } from 'react'
 export interface track {
     name: string,
     url: string,
@@ -20,7 +20,7 @@ export function formatTime(seconds: number) {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
-export default function Track({ name, playing, url, deleteTrack, playTrack, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
+export default function Track({ name, playing, url: _ , deleteTrack: _1 , playTrack: _2, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
     return (
         <div className='w-full'>
             {playing ? (
