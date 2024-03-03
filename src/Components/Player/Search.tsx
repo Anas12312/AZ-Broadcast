@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { track } from './Track'
-import { BASE_URL } from '../../Socket/socket'
+import { BASE_URL, socket } from '../../Socket/socket'
 import SearchCard from './SearchCard'
 import { BallTriangle } from 'react-loader-spinner'
 interface props {
@@ -29,7 +29,7 @@ export default function Search({ refreshQueue, roomId }: props) {
         }
     }
     const addToQueue = async (url: string) => {
-        await fetch(BASE_URL + '/add/' + roomId, {
+        await fetch(BASE_URL + '/add/' + roomId + "/" + socket.id, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
