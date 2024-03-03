@@ -38,10 +38,10 @@ export default function Music({ roomId }: { roomId: string }) {
         setQueue(newItems);
         
     };
-    const playTrack = (url: string) => {
+    const playTrack = (_url: string) => {
 
     }
-    const deleteTrack = (url: string) => {
+    const deleteTrack = (_url: string) => {
 
     }
     useEffect(() => {

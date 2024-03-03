@@ -1,4 +1,4 @@
-import React, { DragEventHandler } from 'react'
+import { DragEventHandler } from 'react'
 import Track, { track } from './Track'
 
 interface props {
@@ -11,7 +11,7 @@ interface props {
     deleteTrack: Function
     playTrack: Function
 }
-export default function Queue({ deleteTrack, playTrack, queue, handleDragOver, handleDragStart, handleDrop, currentTrack, setCurrentTrack }: props) {
+export default function Queue({ deleteTrack, playTrack, queue, handleDragOver, handleDragStart, handleDrop, currentTrack, setCurrentTrack: _ }: props) {
 
     return (
         <div className='flex flex-col h-full w-full justify-center items-center'>

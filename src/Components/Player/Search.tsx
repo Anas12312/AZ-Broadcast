@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { track } from './Track'
 import { BASE_URL } from '../../Socket/socket'
 import SearchCard from './SearchCard'

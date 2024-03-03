@@ -1,4 +1,3 @@
-import React from 'react'
 import { formatTime, track } from './Track'
 interface props extends track {
     index: number,
