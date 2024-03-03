@@ -40,7 +40,7 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
     }
     const next = async () => {
         if (!busy) {
-            await fetch(BASE_URL + '/skip/' + roomId)
+            await fetch(BASE_URL + '/skip/' + roomId + "/" + socket.id)
             setBusy(true)
             audioRef.current?.load()
             refreshQueue()
@@ -48,7 +48,7 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
     }
     const prev = async () => {
         if (!busy) {
-            await fetch(BASE_URL + '/prev/' + roomId)
+            await fetch(BASE_URL + '/prev/' + roomId + "/" + socket.id)
             setBusy(true)
             audioRef.current?.load()
             refreshQueue()

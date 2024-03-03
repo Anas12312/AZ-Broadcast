@@ -39,7 +39,7 @@ export default function Track({ name, playing, url, deleteTrack, playTrack, thum
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>
                     <div className='absolute top-[40%] right-3 p-2 hover:bg-red-800 cursor-pointer rounded-lg'>
-                        <img className='w-6' src='../../../public/icons/remove.png' />
+                        <img className='w-4' src='../../../public/icons/remove.png' />
                     </div>
                 </div>
             ) : (
@@ -58,7 +58,7 @@ export default function Track({ name, playing, url, deleteTrack, playTrack, thum
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>
                     <div className='absolute top-[40%] right-3 hover:bg-red-800 p-2 cursor-pointer rounded-lg'>
-                        <img className='w-6' src='../../../public/icons/remove.png' />
+                        <img className='w-4' src='../../../public/icons/remove.png' />
                     </div>
                 </div>
             )}
