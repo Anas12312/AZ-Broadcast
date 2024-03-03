@@ -8,7 +8,6 @@ function MainMenu() {
   const [error, setError] = useState('')
   const [username, setUsername] = useState(localStorage.getItem('username') || '')
   const [image, setImage] = useState(localStorage.getItem('image') || '')
-
   const onSubmitUserData = () => {
     socket.emit('change_name', { username, image });
     localStorage.setItem('image', image)
@@ -24,7 +23,6 @@ function MainMenu() {
   }
 
   useEffect(() => {
-
     function onError(data: any) {
       setError(data.message)
     }

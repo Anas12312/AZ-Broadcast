@@ -7,26 +7,28 @@ interface props {
     refreshQueue: Function,
     roomId: string
 }
-export default function Search({refreshQueue, roomId} : props) {
+export default function Search({ refreshQueue, roomId }: props) {
     const [searchResults, setSearchResults] = useState<track[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
     const searchYT = async () => {
-        setLoading(true)
-        const results = await fetch(BASE_URL + '/yt', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                searchTerm
+        if (searchTerm) {
+            setLoading(true)
+            const results = await fetch(BASE_URL + '/yt', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    searchTerm
+                })
             })
-        })
-        const videos = await results.json()
-        setSearchResults(videos)
-        setLoading(false)
+            const videos = await results.json()
+            setSearchResults(videos)
+            setLoading(false)
+        }
     }
-    const addToQueue = async (url:string) => {
+    const addToQueue = async (url: string) => {
         await fetch(BASE_URL + '/add/' + roomId, {
             method: "POST",
             headers: {
@@ -65,7 +67,7 @@ export default function Search({refreshQueue, roomId} : props) {
                             return <SearchCard
                                 index={index}
                                 {...searchResult}
-                                onClick = {addToQueue}
+                                onClick={addToQueue}
                             />
                         })
                     }

@@ -3,14 +3,15 @@ import Track, { track } from './Track'
 
 interface props {
     queue: track[],
-    setQueue: Function,
     handleDragStart: Function,
     handleDragOver: DragEventHandler<HTMLDivElement>,
     handleDrop: Function
+    currentTrack: string
+    setCurrentTrack: Function
+    deleteTrack: Function
+    playTrack: Function
 }
-export default function Queue({ queue, setQueue, handleDragOver, handleDragStart, handleDrop }: props) {
-    queue
-    setQueue
+export default function Queue({ deleteTrack, playTrack, queue, handleDragOver, handleDragStart, handleDrop, currentTrack, setCurrentTrack }: props) {
 
     return (
         <div className='flex flex-col h-full w-full justify-center items-center'>
@@ -27,6 +28,9 @@ export default function Queue({ queue, setQueue, handleDragOver, handleDragStart
                         handleDragOver={handleDragOver}
                         handleDragStart={handleDragStart}
                         handleDrop={handleDrop}
+                        deleteTrack={deleteTrack}
+                        playTrack={playTrack}
+                        playing={currentTrack === track.url}
                     />
                 })}
             </div>

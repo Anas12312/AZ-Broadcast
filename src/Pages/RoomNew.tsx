@@ -48,7 +48,6 @@ export default function RoomNew() {
     }
 
     function onRoomCreated(data: any) {
-      console.log('test', data.members);
       setMembers(data.members)
       setMessages([{
         type: "GENERAL",
@@ -59,7 +58,6 @@ export default function RoomNew() {
     }
 
     function onMessageRecieved(data: any) {
-      console.log("data")
       setMessages(oldState => [...oldState, {
         type: "MESSAGE",
         text: data.message,
@@ -110,10 +108,6 @@ export default function RoomNew() {
     }
   }
 
-  useEffect(() => {
-    console.log(members);
-    console.log(socket);
-  }, [members])
 
   // useEffect(() => {
   //   setRoomId(params.id as string)

@@ -1,19 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { Circles } from 'react-loader-spinner'
-import { BASE_URL } from '../../Socket/socket'
+import { BASE_URL, socket } from '../../Socket/socket'
 
 interface props {
-    roomId: string
+    roomId: string,
+    audioRef: React.RefObject<HTMLAudioElement>
+    refreshQueue: Function
+    busy: boolean
+    setBusy: Function
 }
 
-export default function Player({ roomId }: props) {
+export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
     const [volume, setVolume] = useState(50)
     const [loading, setLoading] = useState(false)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
     const [loop, setLoop] = useState("")
-    const audioRef = useRef<HTMLAudioElement>(null)
     const togglePlay = () => {
         if (defean) {
             setDefean(0)
@@ -35,12 +38,25 @@ export default function Player({ roomId }: props) {
             setLoop("ALL")
         }
     }
-    const next = () => {
-        fetch(BASE_URL + '/skip/' + roomId)
+    const next = async () => {
+        if (!busy) {
+            await fetch(BASE_URL + '/skip/' + roomId)
+            setBusy(true)
+            audioRef.current?.load()
+            refreshQueue()
+        }
     }
-    const prev = () => {
-        fetch(BASE_URL + '/prev/' + roomId)
+    const prev = async () => {
+        if (!busy) {
+            await fetch(BASE_URL + '/prev/' + roomId)
+            setBusy(true)
+            audioRef.current?.load()
+            refreshQueue()
+        }
     }
+    useEffect(() => {
+        socket.on('skip', next)
+    })
     return (
         <div className='w-full h-full flex justify-center items-center'>
             {loading ? (
@@ -49,7 +65,11 @@ export default function Player({ roomId }: props) {
                 </div>
             ) : (
                 <div className='flex items-center w-full justify-center relative'>
-                    
+                    {/* <div onClick={() => {
+                        audioRef.current?.load()
+                    }} className='w-20 h-20 bg-yellow-200 flex items-center justify-center'>
+                        Refresh
+                    </div> */}
                     <div className='absolute left-0 flex flex-col-reverse'>
                         <input
                             className='appearance-none h-1 w-20 bg-green-300 rounded-full outline-none cursor-pointer'
@@ -105,7 +125,7 @@ export default function Player({ roomId }: props) {
                 }} />
             </div> */}
             <audio autoPlay={true} className='hidden' ref={audioRef}>
-                <source src={BASE_URL + "/stream/" + roomId} type='audio/webm' />
+                <source src={BASE_URL + "/stream/" + roomId + "/" + socket.id} type='audio/webm' />
             </audio>
         </div>
     )
