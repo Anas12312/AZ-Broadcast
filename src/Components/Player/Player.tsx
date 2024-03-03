@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import ReactPlayer from 'react-player'
+import React, { useEffect, useState } from 'react'
 import { Circles } from 'react-loader-spinner'
 import { BASE_URL, socket } from '../../Socket/socket'
 
@@ -13,7 +12,7 @@ interface props {
 
 export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
     const [volume, setVolume] = useState(50)
-    const [loading, setLoading] = useState(false)
+    const [loading, _setLoading] = useState(false)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
     const [loop, setLoop] = useState("")
@@ -87,34 +86,34 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
 
                     <div onClick={toggleShuffule} className='relative icon'>
                         {shuffle ? (
-                            <img className='w-7' src="../../../public/icons/shuffle.png" alt="" />
+                            <img className='w-7' src="./icons/shuffle.png" alt="" />
                         ) : (
-                            <img className='w-7' src="../../../public/icons/shuffleSelected.png" alt="" />
+                            <img className='w-7' src="./icons/shuffleSelected.png" alt="" />
                         )}
                         <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
                     </div>
                     <div onClick={prev} className='icon relative'>
-                        <img className='w-4' src="../../../public/icons/prev.png" alt="" />
+                        <img className='w-4' src="./icons/prev.png" alt="" />
                         <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
                     </div>
                     <div onClick={togglePlay} className='icon'>
                         {defean ? (
-                            <img className='w-10 hover:scale-110 trans' src="../../../public/icons/pause.png" alt="" />
+                            <img className='w-10 hover:scale-110 trans' src="./icons/pause.png" alt="" />
                         ) : (
-                            <img className='w-10 hover:scale-110 trans' src="../../../public/icons/play-button.png" alt="" />
+                            <img className='w-10 hover:scale-110 trans' src="./icons/play-button.png" alt="" />
                         )}
                     </div>
                     <div onClick={next} className='icon relative'>
-                        <img className='w-4' src="../../../public/icons/next.png" alt="" />
+                        <img className='w-4' src="./icons/next.png" alt="" />
                         <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
                     </div>
                     <div onClick={repeat} className='icon relative'>
                         {loop == "ALL" ? (
-                            <img className='w-6 trans' src="../../../public/icons/repeatSelected.png" alt="" />
+                            <img className='w-6 trans' src="./icons/repeatSelected.png" alt="" />
                         ) : loop == "ONE" ? (
-                            <img className='w-6' src="../../../public/icons/repeat1.png" alt="" />
+                            <img className='w-6' src="./icons/repeat1.png" alt="" />
                         ) : (
-                            <img className='w-6' src="../../../public/icons/repeat.png" alt="" />
+                            <img className='w-6' src="./icons/repeat.png" alt="" />
                         )}
                         <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
                     </div>
