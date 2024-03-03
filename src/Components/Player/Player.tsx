@@ -54,7 +54,11 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
         }
     }
     useEffect(() => {
-        socket.on('skip', next)
+        socket.on('skip', () => {
+            setBusy(true)
+            audioRef.current?.load()
+            refreshQueue()
+        })
     })
     return (
         <div className='w-full h-full flex justify-center items-center'>
