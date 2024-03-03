@@ -61,10 +61,33 @@ export default function RoomNew() {
         type: "MESSAGE",
         text: data.message,
         from: data.senderUsername,
-        image: data.senderImage
+        image: data.sernderImage
       }])
     }
-
+    function onTrackAdded(data: any) {
+      setMessages(oldState => [...oldState, {
+        type: "GENERAL",
+        text: data,
+        from: "SYSTEM",
+        image: "SYSTEM"
+      }])
+    }
+    function onSkip(data: any) {
+      setMessages(oldState => [...oldState, {
+        type: "GENERAL",
+        text: data,
+        from: "SYSTEM",
+        image: "SYSTEM"
+      }])
+    }
+    function onPrev(data: any) {
+      setMessages(oldState => [...oldState, {
+        type: "GENERAL",
+        text: data,
+        from: "SYSTEM",
+        image: "SYSTEM"
+      }])
+    }
     socket.on('message_recieved', onMessageRecieved);
 
     socket.on('room-created', onRoomCreated);
@@ -76,12 +99,22 @@ export default function RoomNew() {
 
     socket.on('member-joined', onMemberJoined);
 
+    socket.on('track_added', onTrackAdded)
+
+    socket.on('track_skiped', onSkip)
+    
+    socket.on('track_preved', onPrev)
+
     return () => {
       socket.off('member-joined', onMemberJoined);
       socket.off('message_recieved', onMessageRecieved);
       socket.off('room-created', onRoomCreated);
       socket.off('member-left', onMemberLeft);
       socket.off('username_changed', onUsernameChanged);
+      socket.off('track_added', onTrackAdded)
+      socket.off('track_skiped', onSkip)
+      socket.off('track_preved', onPrev)
+
     }
   }, [])
 
