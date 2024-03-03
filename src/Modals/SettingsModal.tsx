@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { BASE_URL, socket } from '../Socket/socket';
 
 export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage }: { isOpen: boolean, setIsOpen: Function, oldUsername: string, OldImage: string }) {
 
-  const [username, setUsername] = useState(oldUsername)
-  const [image, _setImage] = useState(OldImage)
+  const [username, setUsername] = useState('')
+  const [image, setImage] = useState('')
   const [error, setError] = useState('')
   const [_isLoading, setIsLoading] = useState(false)
 
@@ -14,7 +14,14 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
   const [selectedFile, setSelectedFile] = useState<File>()
 
 
+  useEffect(() => {
+    setUsername(localStorage.getItem('username') || oldUsername)
+    setImage(localStorage.getItem('image') || OldImage)
+  }, [])
+
   const closeModal = () => {
+    setUsername(localStorage.getItem('username') || oldUsername)
+    setImage(localStorage.getItem('image') || OldImage)
     setError(' ');
     setIsOpen(false);
     setIsLoading(false);
@@ -57,6 +64,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
 
           localStorage.setItem('username', username)
           localStorage.setItem('image', (result as any).image)
+          closeModal()
         })
         .catch((error) => {
           console.log('Error:', error);
@@ -108,7 +116,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         <div className='w-full'>
           <div className='w-full flex justify-center bg-secondary-3 rounded-md border border-primary-1 p-2 mb-1'>
             <div className='relative w-60 h-60 flex justify-center items-center rounded-full border-4 border-white'>
-              <img id='preview' className='object-cover w-full h-full flex-shrink-0 rounded-full' src={image ? image : "./profile.png"}
+              <img id='preview' className='object-cover w-full h-full flex-shrink-0 rounded-full' src={image}
               />
             </div>
           </div>

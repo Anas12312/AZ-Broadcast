@@ -20,3 +20,8 @@ if (!localImage) {
 
 // Init user local data
 socket.emit('init', { username: localUsername, image: localImage });
+
+
+socket.on('data', (data) => {
+  console.log(data.length);
+})
