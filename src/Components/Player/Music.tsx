@@ -39,10 +39,8 @@ export default function Music({ roomId }: { roomId: string }) {
         
     };
     const playTrack = (_url: string) => {
-
     }
     const deleteTrack = (_url: string) => {
-
     }
     useEffect(() => {
         socket.on("track_added", () => {
