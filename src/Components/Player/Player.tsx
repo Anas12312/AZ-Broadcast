@@ -54,11 +54,16 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
         }
     }
     useEffect(() => {
-        socket.on('skip', () => {
+        function skipped() {
+            console.log("anas 5awl")
             setBusy(true)
             audioRef.current?.load()
             refreshQueue()
-        })
+        }
+        socket.on('skip',  skipped)
+        return () => {
+            socket.off('skip', skipped)
+        }
     })
     return (
         <div className='w-full h-full flex justify-center items-center'>

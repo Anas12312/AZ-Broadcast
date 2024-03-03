@@ -18,6 +18,7 @@ export default function Music({ roomId }: { roomId: string }) {
             setQueue(newQueue.tracks)
             setCurrentTrack(newQueue.currentTrack)
         } 
+        console.log("zyad 5awl")
     }
     const handleDragStart = (event: React.DragEvent<HTMLDivElement>, index: number) => {
         event.dataTransfer.setData('index', index.toString());
@@ -43,9 +44,13 @@ export default function Music({ roomId }: { roomId: string }) {
     const deleteTrack = (_url: string) => {
     }
     useEffect(() => {
-        socket.on("track_added", () => {
+        const trackAdded = () => {
             refreshQueue()
-        })  
+        }
+        socket.on("track_added", trackAdded)  
+        return () => {
+            socket.off("track_added", trackAdded)
+        }
     })
     return (
         <div className='bg-slate-800 h-full w-[53%]'>
