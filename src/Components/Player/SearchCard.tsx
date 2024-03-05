@@ -2,15 +2,18 @@ import { formatTime, track } from './Track'
 interface props extends track {
     index: number,
     onClick: Function
+    exist: boolean
 }
-export default function SearchCard({ name, url, thumbnail, author, duration, index, onClick }: props) {
+export default function SearchCard({ name, url, thumbnail, author, duration, index, onClick, exist }: props) {
+    const selectedStyle = 'relative w-full h-20 mt-1 text-white bg-green-700 hover:bg-slate-400 cursor-pointer p-2 flex items-center'
+    const normalStyle = 'relative w-full h-20 mt-1 text-white bg-slate-700 hover:bg-slate-400 cursor-pointer p-2 flex items-center'
     return (
         <div
             key={index}
             onClick={() => {
                 onClick(url)
             }}
-            className='w-full h-20 mt-1 text-white bg-slate-700 hover:bg-slate-400 cursor-pointer p-2 flex items-center'>
+            className={exist? selectedStyle : normalStyle}>
             <div>
                 <img className='w-28' src={thumbnail} alt="" />
             </div>

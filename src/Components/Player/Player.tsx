@@ -11,7 +11,7 @@ interface props {
 }
 
 export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
-    const [volume, setVolume] = useState(50)
+    const [volume, setVolume] = useState(20)
     const [loading, _setLoading] = useState(false)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
@@ -55,7 +55,6 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
     }
     useEffect(() => {
         function skipped() {
-            console.log("anas 5awl")
             setBusy(true)
             audioRef.current?.load()
             refreshQueue()
@@ -78,10 +77,10 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
                     }} className='w-20 h-20 bg-yellow-200 flex items-center justify-center'>
                         Refresh
                     </div> */}
-                    <div className='absolute left-0 flex flex-col-reverse'>
+                    <div className='absolute left-0 flex flex-col-reverse ml-10'>
                         <input
                             className='appearance-none h-1 w-20 bg-green-300 rounded-full outline-none cursor-pointer'
-                            type="range" min={0} max={100} value={volume} step={5} onChange={
+                            type="range" min={0} max={100} value={volume} step={2} onChange={
                                 (e) => {
                                     const newVolume = parseFloat(e.target.value);
                                     setVolume(newVolume);

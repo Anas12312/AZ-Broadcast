@@ -7,7 +7,7 @@ import Search from './Search'
 
 export default function Music({ roomId }: { roomId: string }) {
     const [queue, setQueue] = useState<track[]>([])
-    const [currentTrack, setCurrentTrack] = useState("")
+    const [currentTrack, setCurrentTrack] = useState(0)
     const [busy, setBusy] = useState(false)
     const audioRef = useRef<HTMLAudioElement>(null)
     audioRef.current?.addEventListener("loadeddata", () => setBusy(false))
@@ -18,7 +18,6 @@ export default function Music({ roomId }: { roomId: string }) {
             setQueue(newQueue.tracks)
             setCurrentTrack(newQueue.currentTrack)
         } 
-        console.log("zyad 5awl")
     }
     const handleDragStart = (event: React.DragEvent<HTMLDivElement>, index: number) => {
         event.dataTransfer.setData('index', index.toString());
@@ -41,22 +40,33 @@ export default function Music({ roomId }: { roomId: string }) {
     };
     const playTrack = (_url: string) => {
     }
-    const deleteTrack = (_url: string) => {
+    const deleteTrack = async (id: string) => {``
+        await fetch(BASE_URL + '/remove/' + roomId + "/" + socket.id + "/" + id)
+        refreshQueue()
     }
     useEffect(() => {
         const trackAdded = () => {
             refreshQueue()
         }
+        const trackChanged = () => {
+            audioRef.current?.load()
+            refreshQueue()
+        }
         socket.on("track_added", trackAdded)  
+        socket.on("played", trackChanged)  
         return () => {
             socket.off("track_added", trackAdded)
+            socket.off("played", trackChanged)
         }
     })
+    useEffect(() => {
+        refreshQueue()
+    }, [])
     return (
         <div className='bg-slate-800 h-full w-[53%]'>
             <div className='w-full h-[86%] flex'>
                 <div className='w-[60%]'>
-                    <Search refreshQueue={refreshQueue} roomId={roomId} />
+                    <Search refreshQueue={refreshQueue} roomId={roomId} queue={queue} />
                 </div>
                 <div className=' w-[40%] border-l '>
                     <Queue
