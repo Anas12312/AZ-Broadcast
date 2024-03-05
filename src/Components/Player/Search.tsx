@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { track } from './Track'
 import { BASE_URL, socket } from '../../Socket/socket'
 import SearchCard from './SearchCard'
-import { BallTriangle } from 'react-loader-spinner'
+import { RotatingLines } from 'react-loader-spinner'
 interface props {
     refreshQueue: Function,
     roomId: string
+    queue: track[]
 }
-export default function Search({ refreshQueue, roomId }: props) {
+export default function Search({ refreshQueue, roomId, queue }: props) {
     const [searchResults, setSearchResults] = useState<track[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
@@ -58,7 +59,7 @@ export default function Search({ refreshQueue, roomId }: props) {
             </div>
             {loading ? (
                 <div className='flex justify-center items-center w-full h-full'>
-                    <BallTriangle />
+                    <RotatingLines />
                 </div>
             ) : (
                 <div className='mt-8 h-full border overflow-y-scroll'>
@@ -68,6 +69,9 @@ export default function Search({ refreshQueue, roomId }: props) {
                                 index={index}
                                 {...searchResult}
                                 onClick={addToQueue}
+                                exist = {queue.filter((t)=>{
+                                    return t.url === searchResult.url
+                                }).length > 0}
                             />
                         })
                     }

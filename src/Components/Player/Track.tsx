@@ -1,5 +1,6 @@
 import { DragEventHandler } from 'react'
 export interface track {
+    id: string,
     name: string,
     url: string,
     thumbnail: string,
@@ -20,7 +21,7 @@ export function formatTime(seconds: number) {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
-export default function Track({ name, playing, url: _ , deleteTrack: _1 , playTrack: _2, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
+export default function Track({ name, playing, url: _ , deleteTrack , playTrack: _2, id, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
     return (
         <div className='w-full'>
             {playing ? (
@@ -58,7 +59,9 @@ export default function Track({ name, playing, url: _ , deleteTrack: _1 , playTr
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>
                     <div className='absolute top-[40%] right-3 hover:bg-red-800 p-2 cursor-pointer rounded-lg'>
-                        <img className='w-4' src='../../../public/icons/remove.png' />
+                        <img onClick={() => {
+                            deleteTrack(id)
+                        }} className='w-4' src='../../../icons/remove.png' />
                     </div>
                 </div>
             )}
