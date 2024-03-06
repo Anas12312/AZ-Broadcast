@@ -41,7 +41,7 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack: _
                     </div>
                     <img onClick={() => {
                         deleteTrack(id)
-                    }} className='w-4' src='../../../icons/remove.png' />
+                    }} className='w-4' src='./icons/remove.png' />
                 </div>
             ) : (
                 <div draggable
