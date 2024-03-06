@@ -48,14 +48,19 @@ export default function Music({ roomId }: { roomId: string }) {
         const trackAdded = () => {
             refreshQueue()
         }
+        const trackRemoved = () => {
+            refreshQueue()
+        }
         const trackChanged = () => {
             audioRef.current?.load()
             refreshQueue()
         }
         socket.on("track_added", trackAdded)  
+        socket.on("removed", trackRemoved)  
         socket.on("played", trackChanged)  
         return () => {
             socket.off("track_added", trackAdded)
+            socket.off("removed", trackRemoved)
             socket.off("played", trackChanged)
         }
     })
