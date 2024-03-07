@@ -36,7 +36,15 @@ export default function Music({ roomId }: { roomId: string }) {
         newItems.splice(dropIndex, 0, dragItem);
 
         setQueue(newItems);
-        
+        fetch(BASE_URL + '/edit/' + roomId + "/" + socket.id, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                tracks: newItems
+            })
+        })
     };
     const playTrack = (id: string) => {
         fetch(BASE_URL + '/play/' + roomId + "/" + socket.id + "/" + id)
@@ -57,13 +65,18 @@ export default function Music({ roomId }: { roomId: string }) {
             audioRef.current?.load()
             refreshQueue()
         }
+        const onModified = () => {
+            refreshQueue()
+        }
         socket.on("track_added", trackAdded)  
         socket.on("removed", trackRemoved)  
         socket.on("played", trackChanged)  
+        socket.on("modified", onModified)  
         return () => {
             socket.off("track_added", trackAdded)
             socket.off("removed", trackRemoved)
             socket.off("played", trackChanged)
+            socket.off("modified", onModified)
         }
     })
     useEffect(() => {
