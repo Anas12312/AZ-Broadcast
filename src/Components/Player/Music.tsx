@@ -38,10 +38,12 @@ export default function Music({ roomId }: { roomId: string }) {
         setQueue(newItems);
         
     };
-    const playTrack = (_url: string) => {
+    const playTrack = (id: string) => {
+        fetch(BASE_URL + '/play/' + roomId + "/" + socket.id + "/" + id)
+        audioRef.current?.load()
     }
     const deleteTrack = async (id: string) => {
-        await fetch(BASE_URL + '/remove/' + roomId + "/" + socket.id + "/" + id)
+        fetch(BASE_URL + '/remove/' + roomId + "/" + socket.id + "/" + id)
         // refreshQueue()
     }
     useEffect(() => {
