@@ -21,7 +21,7 @@ export function formatTime(seconds: number) {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
-export default function Track({ name, playing, url: _, deleteTrack, playTrack: _2, id, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
+export default function Track({ name, playing, url: _, deleteTrack, playTrack, id, thumbnail, handleDragStart, handleDragOver, handleDrop, index, author, duration }: props) {
     return (
         <div className='w-full'>
             {playing ? (
@@ -49,7 +49,8 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack: _
                     onDragStart={(event) => handleDragStart(event, index)}
                     onDragOver={handleDragOver}
                     onDrop={(event) => handleDrop(event, index)}
-                    className='w-full h-20 mt-1 bg-slate-700 p-2 flex items-center relative'>
+                    onClick={(e) => playTrack(id)}
+                    className='w-full h-20 mt-1 bg-slate-700 hover:bg-green-900 p-2 flex items-center relative'>
                     <div>
                         <img className='w-28' src={thumbnail} alt="" />
                     </div>
