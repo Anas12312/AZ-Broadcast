@@ -1,21 +1,22 @@
 import { io } from 'socket.io-client';
+import Cookies from 'cookies-js';
 
-export const BASE_URL = 'http://localhost:4000'
-// export const BASE_URL = "https://webrtc-test-l40m.onrender.com";
+// export const BASE_URL = 'http://localhost:4000'
+export const BASE_URL = "https://webrtc-test-l40m.onrender.com";
 
 export const socket = io(BASE_URL);
 
 // Get user local data
-let localUsername = localStorage.getItem('username');
-let localImage = localStorage.getItem('image');
+let localUsername = Cookies.get('username')
+let localImage = Cookies.get('image')
 
 if (!localUsername) {
   localUsername = 'USER' + Math.floor(Math.random() * 10000);
-  localStorage.setItem('username', localUsername);
+  Cookies.set("username", localUsername)
 }
 if (!localImage) {
   localImage = './profile.png'
-  localStorage.setItem('image', localImage)
+  Cookies.set("image", localImage)
 };
 
 // Init user local data

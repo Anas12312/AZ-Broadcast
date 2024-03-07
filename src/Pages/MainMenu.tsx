@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { socket } from '../Socket/socket';
+import Cookies from 'cookies-js';
 function MainMenu() {
   const nav = useNavigate();
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const [username, setUsername] = useState(localStorage.getItem('username') || '')
-  const [image, setImage] = useState(localStorage.getItem('image') || '')
+  const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
+  const [image, setImage] = useState(Cookies.get("image") || '')
   const onSubmitUserData = () => {
     socket.emit('change_name', { username, image });
-    localStorage.setItem('image', image)
-    localStorage.setItem('username', username)
+    Cookies.set("image", image)
+    Cookies.set("username", username)
   }
 
   const createRoom = () => {
@@ -50,9 +51,9 @@ function MainMenu() {
 
   return (<div onKeyDown={(e) => {
     console.log(e.keyCode)
-    if(e.key = "p") {
-      nav('/test')
-    }
+    // if(e.key = "p") {
+    //   nav('/test')
+    // }
   }}>
     <form
       className='flex flex-col absolute bottom-0 left-0 space-y-1 bg-slate-700 p-4 border border-slate-800 rounded-tr-xl'

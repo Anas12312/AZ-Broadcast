@@ -4,9 +4,16 @@ type chatProps = {
         type: string,
         text: string,
         from: string,
-        image: string
+        image: string,
+        time: string
     }[],
     sendMessage: Function
+}
+export function currentTime() {
+    const date = new Date()
+    const minutes = date.getMinutes()
+    const time = date.getHours() > 12? date.getHours() - 12 + ":" + minutes + " pm": date.getHours() + ":" + minutes 
+    return time
 }
 export default function Chat({ messages, sendMessage }: chatProps) {
 
@@ -26,11 +33,11 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                             )
                         } else if (message.type === "MESSAGE") {
                             return (
-                                <Message content={message.text} username={message.from} image={message.image} timeStamp='now' key={i}/>
+                                <Message content={message.text} username={message.from} image={message.image} timeStamp={message.time} key={i}/>
                             )
                         } else if (message.type === "SELF") {
                             return (
-                                <Message content={message.text} username={'you'} image={message.image} timeStamp='now' key={i}/>
+                                <Message content={message.text} username={'You'} image={message.image} timeStamp={currentTime()} key={i}/>
                             )
                         }
                     })

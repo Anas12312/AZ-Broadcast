@@ -6,9 +6,11 @@ type ProfilePanel = {
     username: string,
     image: string
     leaveRoom: Function
+    setUsername: Function
+    setImage: Function
 }
 
-export default function ProfilePanel({ leaveRoom, username, image }: ProfilePanel) {
+export default function ProfilePanel({ leaveRoom, username, image, setUsername, setImage }: ProfilePanel) {
     const [settingsModal, setSettingModal] = useState(false);
 
     const openSettingModal = () => {
@@ -21,6 +23,8 @@ export default function ProfilePanel({ leaveRoom, username, image }: ProfilePane
                 setIsOpen={setSettingModal}
                 oldUsername={username}
                 OldImage={image}
+                setImage={setImage}
+                setUsername={setUsername}
             />
             {/* Status */}
             < div className='h-[45%] bg-[#15181f] flex justify-between items-center px-3' >

@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import ProfilePanel from '../Components/ProfilePanel'
-import Chat from '../Components/Chat'
+import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import { socket } from '../Socket/socket'
 import Music from '../Components/Player/Music'
+import Cookies from 'cookies-js';
 
 export default function RoomNew() {
 
   const [members, setMembers] = useState<Member[]>([])
-  const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string  }[])
+  const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
   const params = useParams();
   const nav = useNavigate()
 
   const roomId = params.id!;
 
-  const [username, setUsername] = useState(localStorage.getItem('username')!)
-  const [image, setImage] = useState(localStorage.getItem('image')!)
+  const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
+  const [image, setImage] = useState(Cookies.get("image") || '')
 
   useEffect(() => {
     function onMemberJoined(data: any) {
@@ -26,14 +27,15 @@ export default function RoomNew() {
         type: "GENERAL",
         text: `${data.memberUsername} has joined the room`,
         from: "SYSTEM",
-        image: "anas"
+        image: "anas",
+        time: ""
       }])
     }
 
     function onUsernameChanged(data: any) {
       setMembers(data.members)
-      setUsername(localStorage.getItem('username')!)
-      setImage(localStorage.getItem('image')!)
+      // Cookies.set("image", image)
+      // Cookies.set("username", username)
     }
 
     function onMemberLeft(data: any) {
@@ -42,7 +44,8 @@ export default function RoomNew() {
         type: "GENERAL",
         text: `${data.memberUsername} has left the room`,
         from: "SYSTEM",
-        image: "anas"
+        image: "anas",
+        time: ""
       }])
     }
 
@@ -52,7 +55,8 @@ export default function RoomNew() {
         type: "GENERAL",
         text: "You Have just Created This Channel Invite People to Join",
         from: "SYSTEM",
-        image: "anas"
+        image: "anas",
+        time: ""
       }])
     }
 
@@ -61,7 +65,8 @@ export default function RoomNew() {
         type: "MESSAGE",
         text: data.message,
         from: data.senderUsername,
-        image: data.sernderImage
+        image: data.sernderImage,
+        time: currentTime()
       }])
     }
     function onTrackAdded(data: any) {
@@ -69,7 +74,8 @@ export default function RoomNew() {
         type: "GENERAL",
         text: data,
         from: "SYSTEM",
-        image: "SYSTEM"
+        image: "SYSTEM",
+        time: ""
       }])
     }
     function onSkip(data: any) {
@@ -77,7 +83,8 @@ export default function RoomNew() {
         type: "GENERAL",
         text: data,
         from: "SYSTEM",
-        image: "SYSTEM"
+        image: "SYSTEM",
+        time: ""
       }])
     }
     function onPrev(data: any) {
@@ -85,7 +92,8 @@ export default function RoomNew() {
         type: "GENERAL",
         text: data,
         from: "SYSTEM",
-        image: "SYSTEM"
+        image: "SYSTEM",
+        time: ""
       }])
     }
     socket.on('message_recieved', onMessageRecieved);
@@ -102,7 +110,7 @@ export default function RoomNew() {
     socket.on('track_added', onTrackAdded)
 
     socket.on('track_skiped', onSkip)
-    
+
     socket.on('track_preved', onPrev)
 
     return () => {
@@ -135,7 +143,8 @@ export default function RoomNew() {
         type: "SELF",
         text: message,
         from: 'ME',
-        image: image
+        image: image,
+        time: ""
       }])
     }
   }
@@ -160,7 +169,7 @@ export default function RoomNew() {
         {/* Members */}
         <Members members={members} />
 
-        <ProfilePanel leaveRoom={leaveRoom} username={username} image={image} />
+        <ProfilePanel setUsername={setUsername} setImage={setImage} leaveRoom={leaveRoom} username={username} image={image} />
 
         {/* Playlist */}
         <Music roomId={roomId} />
