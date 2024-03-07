@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "vite",
     "build": "",
+    "deploy": "git pull origin master && npm run build-vite && npm run git-z",
     "build-vite": "tsc && vite build",
     "build-electron": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 ",
     "lint-fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "git-z": "git add . && git commit -m zyad && git push origin zyad"
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.0",
