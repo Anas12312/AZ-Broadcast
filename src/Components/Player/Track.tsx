@@ -49,7 +49,7 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                     onDragStart={(event) => handleDragStart(event, index)}
                     onDragOver={handleDragOver}
                     onDrop={(event) => handleDrop(event, index)}
-                    onClick={(e) => playTrack(id)}
+                    onClick={(_) => playTrack(id)}
                     className='w-full h-20 mt-1 bg-slate-700 hover:bg-green-900 p-2 flex items-center relative'>
                     <div>
                         <img className='w-28' src={thumbnail} alt="" />
