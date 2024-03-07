@@ -40,9 +40,9 @@ export default function Music({ roomId }: { roomId: string }) {
     };
     const playTrack = (_url: string) => {
     }
-    const deleteTrack = async (id: string) => {``
+    const deleteTrack = async (id: string) => {
         await fetch(BASE_URL + '/remove/' + roomId + "/" + socket.id + "/" + id)
-        refreshQueue()
+        // refreshQueue()
     }
     useEffect(() => {
         const trackAdded = () => {

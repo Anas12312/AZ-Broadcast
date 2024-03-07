@@ -1,8 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { BASE_URL, socket } from '../Socket/socket';
+import Cookies from 'cookies-js';
 
-export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage }: { isOpen: boolean, setIsOpen: Function, oldUsername: string, OldImage: string }) {
+interface props { 
+  isOpen: boolean, 
+  setIsOpen: Function, 
+  oldUsername: string, 
+  OldImage: string 
+  setUsername: Function
+  setImage: Function
+}
+
+export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage, setUsername: setMainUN, setImage: setMainIMG }: props) {
 
   const [username, setUsername] = useState('')
   const [image, setImage] = useState('')
@@ -15,13 +25,13 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
 
 
   useEffect(() => {
-    setUsername(localStorage.getItem('username') || oldUsername)
-    setImage(localStorage.getItem('image') || OldImage)
+    setUsername(Cookies.get("username") || oldUsername)
+    setImage(Cookies.get("image") || OldImage)
   }, [])
 
   const closeModal = () => {
-    setUsername(localStorage.getItem('username') || oldUsername)
-    setImage(localStorage.getItem('image') || OldImage)
+    setUsername(Cookies.get("username") || oldUsername)
+    setImage(Cookies.get("image") || OldImage)
     setError(' ');
     setIsOpen(false);
     setIsLoading(false);
@@ -61,9 +71,10 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
           result = await result.json();
 
           socket.emit('change_name', { username, image: (result as any).image })
-
-          localStorage.setItem('username', username)
-          localStorage.setItem('image', (result as any).image)
+          setMainUN(username)
+          setMainIMG((result as any).image)
+          Cookies.set("username", username)
+          Cookies.set("image", (result as any).image)
           closeModal()
         })
         .catch((error) => {
@@ -71,7 +82,8 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         });
     } else {
       socket.emit('change_name', { username, image })
-      localStorage.setItem('username', username)
+      setMainUN(username)
+      Cookies.set("username", username)
       closeModal()
     }
   };
