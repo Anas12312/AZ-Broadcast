@@ -39,9 +39,10 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                         <div className='text-sm'>{author}</div>
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>
-                    <img onClick={() => {
+                    <img onClick={(e) => {
                         deleteTrack(id)
-                    }} className='w-4' src='./icons/remove.png' />
+                        e.stopPropagation()
+                    }} className='w-4' src='../../../icons/remove.png' />
                 </div>
             ) : (
                 <div draggable
@@ -49,7 +50,7 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                     onDragStart={(event) => handleDragStart(event, index)}
                     onDragOver={handleDragOver}
                     onDrop={(event) => handleDrop(event, index)}
-                    onClick={(_) => playTrack(id)}
+                    onClick={() => playTrack(id)}
                     className='w-full h-20 mt-1 bg-slate-700 hover:bg-green-900 p-2 flex items-center relative'>
                     <div>
                         <img className='w-28' src={thumbnail} alt="" />
@@ -60,7 +61,8 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>
                     <div className='absolute top-[40%] right-3 hover:bg-red-800 p-2 cursor-pointer rounded-lg'>
-                        <img onClick={() => {
+                        <img onClick={(e) => {
+                            e.stopPropagation()
                             deleteTrack(id)
                         }} className='w-4' src='../../../icons/remove.png' />
                     </div>

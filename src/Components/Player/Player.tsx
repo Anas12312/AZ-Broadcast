@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Circles } from 'react-loader-spinner'
 import { BASE_URL, socket } from '../../Socket/socket'
 
 interface props {
@@ -12,17 +11,16 @@ interface props {
 
 export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
     const [volume, setVolume] = useState(20)
-    const [loading, _setLoading] = useState(false)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
     const [loop, setLoop] = useState("")
     const togglePlay = () => {
         if (defean) {
             setDefean(0)
-            audioRef.current!.volume = 0;
+            // audioRef.current!.volume = 0;
         } else {
             setDefean(1)
-            audioRef.current!.volume = volume / 100;
+            // audioRef.current!.volume = volume / 100;
         }
     }
     const toggleShuffule = () => {
@@ -54,6 +52,9 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
         }
     }
     useEffect(() => {
+        audioRef.current!.volume = defean * volume / 100;
+    }, [volume, defean])
+    useEffect(() => {
         function skipped() {
             setBusy(true)
             audioRef.current?.load()
@@ -66,17 +67,7 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
     })
     return (
         <div className='w-full h-full flex justify-center items-center'>
-            {loading ? (
-                <div>
-                    <Circles />
-                </div>
-            ) : (
-                <div className='flex items-center w-full justify-center relative'>
-                    {/* <div onClick={() => {
-                        audioRef.current?.load()
-                    }} className='w-20 h-20 bg-yellow-200 flex items-center justify-center'>
-                        Refresh
-                    </div> */}
+            <div className='flex items-center w-full justify-center relative'>
                     <div className='absolute left-0 flex flex-col-reverse ml-10'>
                         <input
                             className='appearance-none h-1 w-20 bg-green-300 rounded-full outline-none cursor-pointer'
@@ -84,7 +75,6 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
                                 (e) => {
                                     const newVolume = parseFloat(e.target.value);
                                     setVolume(newVolume);
-                                    audioRef.current!.volume = defean * newVolume / 100;
                                 }} />
                     </div>
 
@@ -123,8 +113,6 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
                     </div>
 
                 </div>
-            )
-            }
             {/* <div className="">
                 <ReactPlayer url={BASE_URL + "/stream/" + roomId} volume={(volume / 100) * defean} onReady={() => {
                     console.log("anas")
