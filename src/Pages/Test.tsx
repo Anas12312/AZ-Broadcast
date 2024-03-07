@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Test() {
-  const [anas, setAnas] = useState()
   const nav = useNavigate()
   return (
     <div>
