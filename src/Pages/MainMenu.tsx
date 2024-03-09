@@ -81,17 +81,17 @@ function MainMenu() {
 
     <div className='w-screen h-screen text-main'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
-        <div className='w-full text-xl font-bold flex justify-center items-center mt-[70px]'>
+        <div className='w-full text-xl font-bold flex justify-center items-center mt-[50px]'>
           <img className='w-[400.15px]' src='../../images/logo.png' />
         </div>
         <div className='font-main text-[36px] text-center mt-[32px] font-bold'>
           Free video calls and meeting rooms for everyone <br></br> to talk, play music, and hangout
         </div>
         <div className='w-[250px] h-[60px] flex justify-center items-center  font-main text-[24px]
-                        bg-[#6D4C41] rounded-md text-white m-2 mr-6 mt-[32px] font-bold
+                        bg-[#6D4C41] rounded-md text-white m-2 mr-6 mt-[20px] font-bold
                         hover:cursor-pointer hover:shadow hover:bg-[#643c2f]'
           onClick={createRoom}>Create Room <img className='w-[40px] ml-4' src="../../icons/plus.png" alt="" /></div>
-        <div className='flex items-center m-[32px]'>
+        <div className='flex items-center m-[20px]'>
           <input
             className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-l-[10px] text-main'
             value={code}
@@ -112,7 +112,7 @@ function MainMenu() {
             onClick={joinRoom}>Join</div>
         </div>
         <div className=' text-red-600 font-bold'>{error}</div>
-        <div className='font-main text-black text-center mt-4 text-lg font-bold'>
+        <div className='font-main text-black text-center mt-3 text-lg font-bold'>
           AZ Broadcast Provides secure and easy-to-use video calls and meetings <br></br>with a music player for everyone, on any device
         </div>
       </div>
