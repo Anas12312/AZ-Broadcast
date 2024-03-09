@@ -27,7 +27,7 @@ function MainMenu() {
     function onError(data: any) {
       setError(data.message)
     }
- 
+
     function onJoined(data: any) {
       nav('/room/' + data.roomId)
     }
@@ -43,7 +43,7 @@ function MainMenu() {
     return () => {
       socket.off('error', onError);
       socket.off('joined', onJoined);
-      socket.off('created', onCreated);        
+      socket.off('created', onCreated);
     }
 
   }, [])
@@ -56,8 +56,8 @@ function MainMenu() {
     // }
   }}>
     <form
-      className='flex flex-col absolute bottom-0 left-0 space-y-1 bg-slate-700 p-4 border border-slate-800 rounded-tr-xl'
-      
+      className='flex flex-col absolute bottom-0 left-0 space-y-1 bg-slate-700 p-4 border border-slate-800 rounded-tr-xl '
+
     >
       <label className='text-white' >Username</label>
       <input
@@ -79,40 +79,42 @@ function MainMenu() {
       >Save</button>
     </form>
 
-    <div className='w-screen h-screen'>
+    <div className='w-screen h-screen text-main'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
-        <div className='w-full text-xl font-bold flex justify-center items-center  mt-10'>
-          <img className='w-52' src='../../images/logo.png' />
+        <div className='w-full text-xl font-bold flex justify-center items-center mt-[70px]'>
+          <img className='w-[400.15px]' src='../../images/logo.png' />
         </div>
-        <div className='font-main text-4xl text-center mt-4'>
+        <div className='font-main text-[36px] text-center mt-[32px] font-bold'>
           Free video calls and meeting rooms for everyone <br></br> to talk, play music, and hangout
         </div>
-        <div className='font-main text-gray-600 text-center mt-8'>
-          AZ Broadcast Provides secure and easy-to-use video calls and meetings <br></br>with a music player for everyone, on any device
-        </div>
-        <div className='mt-5 text-red-600 font-bold'>{error}</div>
-        <div className='flex items-center'>
-          <div className='w-32 h-12 flex justify-center items-center 
-                        bg-gray-600 rounded-md text-white m-2 mr-6 font-bold
-                          hover:cursor-pointer hover:shadow hover:bg-gray-700'
-            onClick={createRoom}>New Room</div>
-
+        <div className='w-[250px] h-[60px] flex justify-center items-center  font-main text-[24px]
+                        bg-[#6D4C41] rounded-md text-white m-2 mr-6 mt-[32px] font-bold
+                        hover:cursor-pointer hover:shadow hover:bg-[#643c2f]'
+          onClick={createRoom}>Create Room <img className='w-[40px] ml-4' src="../../icons/plus.png" alt="" /></div>
+        <div className='flex items-center m-[32px]'>
           <input
-            className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-md'
+            className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-l-[10px] text-main'
             value={code}
             placeholder='Type the ID of the room'
             onChange={(e) => {
               setCode(e.target.value)
             }}
+            onKeyDown={(e) => {
+              if(e.key === "Enter") {
+                joinRoom()
+              }
+            }}
           />
-          <div className='w-12 h-12
-          
-           flex justify-center items-center 
-                        text-gray-600 rounded-md m-1 font-bold
-                          hover:cursor-pointer hover:text-gray-800'
+          <div className='w-[100px] h-12 rounded-r-[10px] bg-[#6D4C41]
+                        flex justify-center items-center 
+                        text-white text-main text-[24px]
+                        hover:cursor-pointer hover:bg-[#643c2f]'
             onClick={joinRoom}>Join</div>
         </div>
-
+        <div className=' text-red-600 font-bold'>{error}</div>
+        <div className='font-main text-black text-center mt-4 text-lg font-bold'>
+          AZ Broadcast Provides secure and easy-to-use video calls and meetings <br></br>with a music player for everyone, on any device
+        </div>
       </div>
     </div>
   </div>)
