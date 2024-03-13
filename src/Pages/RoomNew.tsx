@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import Members, { Member } from '../Components/Members'
-import ProfilePanel from '../Components/ProfilePanel'
 import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'

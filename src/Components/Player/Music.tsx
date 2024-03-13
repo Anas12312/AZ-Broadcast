@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import Queue from './Queue'
 import { track } from './Track'
 import { BASE_URL, socket } from '../../Socket/socket'
@@ -14,7 +14,7 @@ interface props {
     setQueue: Function
     setCurrentTrack: Function
 }
-export default function Music({ roomId, audioRef, busy, setBusy, refreshQueue, queue, currentTrack, setCurrentTrack, setQueue }: props) {
+export default function Music({ roomId, audioRef, setBusy, refreshQueue, queue, currentTrack, setCurrentTrack, setQueue }: props) {
     
     audioRef.current?.addEventListener("loadeddata", () => setBusy(false))
     
