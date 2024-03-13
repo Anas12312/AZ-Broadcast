@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import ProfilePanel from '../Components/ProfilePanel'
 import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
 import { useNavigate, useParams } from 'react-router-dom'
-import { socket } from '../Socket/socket'
+import { BASE_URL, socket } from '../Socket/socket'
 import Music from '../Components/Player/Music'
 import Cookies from 'cookies-js';
+import Player from '../Components/Player/Player'
+import { track } from '../Components/Player/Track'
 
 export default function RoomNew() {
 
@@ -14,9 +16,19 @@ export default function RoomNew() {
   const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
   const params = useParams();
   const nav = useNavigate()
-
+  const [busy, setBusy] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [queue, setQueue] = useState<track[]>([])
+  const [currentTrack, setCurrentTrack] = useState(0)
   const roomId = params.id!;
-
+  const refreshQueue = async () => {
+    const response = await fetch(BASE_URL + '/queue/' + roomId + "/" + socket.id)
+    const newQueue = await response.json()
+    if (newQueue.tracks) {
+      setQueue(newQueue.tracks)
+      setCurrentTrack(newQueue.currentTrack)
+    }
+  }
   const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
   const [image, setImage] = useState(Cookies.get("image") || '')
 
@@ -144,7 +156,7 @@ export default function RoomNew() {
         text: message,
         from: 'ME',
         image: image,
-        time: ""
+        time: currentTime()
       }])
     }
   }
@@ -163,21 +175,46 @@ export default function RoomNew() {
   }
 
   return (
-    <div className='relative bg-white w-full h-full'>
-      <div className='flex justify-center items-end w-full h-full'>
-
+    <div className='relative flex flex-col bg-gradient-to-bl from-accent to-primary-alt  w-full h-full'>
+      <div className='w-full flex h-[90%]'>
         {/* Members */}
-        <Members members={members} />
+        <Members 
+          members={members} 
+          image={image}
+          setImage={setImage}
+          leaveRoom={leaveRoom}
+          setUsername={setUsername}
+          username={username}
+        />
 
-        <ProfilePanel setUsername={setUsername} setImage={setImage} leaveRoom={leaveRoom} username={username} image={image} />
 
         {/* Playlist */}
-        <Music roomId={roomId} />
+        <Music 
+          roomId={roomId} 
+          audioRef={audioRef}
+          busy={busy}
+          currentTrack={currentTrack}
+          queue={queue}
+          setBusy={setBusy}
+          refreshQueue={refreshQueue}
+          setCurrentTrack={setCurrentTrack}
+          setQueue={setQueue}
+        />
 
         {/* Chat */}
         <Chat messages={messages} sendMessage={sendMessage} />
 
         <RoomInfo roomId={roomId!} />
+      </div>
+      <div className='w-full h-[10%]'>
+        <Player
+          audioRef={audioRef}
+          roomId={roomId}
+          refreshQueue={refreshQueue}
+          busy={busy}
+          setBusy={setBusy}
+          currentTrack={queue.at(currentTrack)}
+        />
       </div>
     </div>
   )

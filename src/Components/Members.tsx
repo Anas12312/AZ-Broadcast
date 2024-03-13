@@ -1,18 +1,31 @@
-
-export default function Members({ members = [] }: {members: Member[]} ) {
+import ProfilePanel from "./ProfilePanel"
+interface props {
+    members: Member[]
+    setUsername: Function
+    setImage: Function
+    leaveRoom: Function
+    username: string
+    image: string
+}
+export default function Members({ members = [], setImage, image, leaveRoom, setUsername, username }: props) {
 
     return (
-        <div className='bg-[#1e1f22] h-full w-[17%]'>
+        <div className=' h-full w-[17%] flex flex-col justify-between'>
+            <div className="flex flex-col h-full w-full">
+                <div className="w-full h-[20%] flex justify-center items-center">
+                    <img className="w-44" src="../../images/logo-2.png" alt="" />
+                </div>
+                <div className='flex flex-col space-y-1 pt-5 px-3 justify-start items-center'>
+                    {
+                        members.map((member, i) => {
+                            return <MemberCard {...member} key={i} />
+                        })
+                    }
 
-            <div className=' flex flex-col space-y-1 pt-5 px-3 justify-start items-center'>
-
-                {
-                    members.map((member, i) => {
-                        return <MemberCard {...member} key={i} />
-                    })
-                }
-
+                </div>
             </div>
+            <ProfilePanel setUsername={setUsername} setImage={setImage} leaveRoom={leaveRoom} username={username} image={image} />
+
         </div>
     )
 }

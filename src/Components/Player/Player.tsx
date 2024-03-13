@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BASE_URL, socket } from '../../Socket/socket'
+import { formatTime, track } from './Track'
 
 interface props {
     roomId: string,
@@ -7,9 +8,10 @@ interface props {
     refreshQueue: Function
     busy: boolean
     setBusy: Function
+    currentTrack: track | undefined
 }
 
-export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }: props) {
+export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId, currentTrack }: props) {
     const [volume, setVolume] = useState(20)
     const [shuffle, setShuffle] = useState(false)
     const [defean, setDefean] = useState(1)
@@ -60,59 +62,92 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId }
             audioRef.current?.load()
             refreshQueue()
         }
-        socket.on('skip',  skipped)
+        socket.on('skip', skipped)
         return () => {
             socket.off('skip', skipped)
         }
     })
     return (
-        <div className='w-full h-full flex justify-center items-center'>
+        <div className='w-full h-full flex justify-between items-center bg-black'>
+            {
+                currentTrack ?
+                    (
+                        <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 hover:bg-slate-100 w-[15%]'>
+                            <div className='font-bold text-base w-full'>
+                                {
+                                    currentTrack?.name
+                                }
+                            </div>
+                            <div className='flex justify-between'>
+                                <div className=''>
+                                    {
+                                        currentTrack?.author
+                                    }
+                                </div>
+                                <div className=''>
+                                    {
+                                        formatTime(currentTrack?.duration!)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    ) :
+                    (
+                        <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 hover:bg-slate-100 w-[25%]'>
+                            <div className='font-bold text-base w-full'>
+                               No track is currently playing
+                            </div>
+                            <div className='flex justify-between'>
+                                
+                            </div>
+                        </div>
+                    )}
             <div className='flex items-center w-full justify-center relative'>
-                    <div className='absolute left-0 flex flex-col-reverse ml-10'>
-                        <input
-                            className='appearance-none h-1 w-20 bg-green-300 rounded-full outline-none cursor-pointer'
-                            type="range" min={0} max={100} value={volume} step={2} onChange={
-                                (e) => {
-                                    const newVolume = parseFloat(e.target.value);
-                                    setVolume(newVolume);
-                                }} />
-                    </div>
-
-                    <div onClick={toggleShuffule} className='relative icon'>
-                        {shuffle ? (
-                            <img className='w-7' src="./icons/shuffle.png" alt="" />
-                        ) : (
-                            <img className='w-7' src="./icons/shuffleSelected.png" alt="" />
-                        )}
-                        <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
-                    </div>
-                    <div onClick={prev} className='icon relative'>
-                        <img className='w-4' src="./icons/prev.png" alt="" />
-                        <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
-                    </div>
-                    <div onClick={togglePlay} className='icon'>
-                        {defean ? (
-                            <img className='w-10 hover:scale-110 trans' src="./icons/pause.png" alt="" />
-                        ) : (
-                            <img className='w-10 hover:scale-110 trans' src="./icons/play-button.png" alt="" />
-                        )}
-                    </div>
-                    <div onClick={next} className='icon relative'>
-                        <img className='w-4' src="./icons/next.png" alt="" />
-                        <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
-                    </div>
-                    <div onClick={repeat} className='icon relative'>
-                        {loop == "ALL" ? (
-                            <img className='w-6 trans' src="./icons/repeatSelected.png" alt="" />
-                        ) : loop == "ONE" ? (
-                            <img className='w-6' src="./icons/repeat1.png" alt="" />
-                        ) : (
-                            <img className='w-6' src="./icons/repeat.png" alt="" />
-                        )}
-                        <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
-                    </div>
-
+                <div onClick={toggleShuffule} className='relative icon'>
+                    {shuffle ? (
+                        <img className='w-7' src="./icons/shuffle.png" alt="" />
+                    ) : (
+                        <img className='w-7' src="./icons/shuffleSelected.png" alt="" />
+                    )}
+                    <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
                 </div>
+                <div onClick={prev} className='icon relative'>
+                    <img className='w-4' src="./icons/prev.png" alt="" />
+                    <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
+                </div>
+                <div onClick={togglePlay} className='icon'>
+                    {defean ? (
+                        <img className='w-10 hover:scale-110 trans' src="./icons/pause.png" alt="" />
+                    ) : (
+                        <img className='w-10 hover:scale-110 trans' src="./icons/play-button.png" alt="" />
+                    )}
+                </div>
+                <div onClick={next} className='icon relative'>
+                    <img className='w-4' src="./icons/next.png" alt="" />
+                    <div className='absolute inset-0 bg-black opacity-30 hover:opacity-0'></div>
+                </div>
+                <div onClick={repeat} className='icon relative'>
+                    {loop == "ALL" ? (
+                        <img className='w-6 trans' src="./icons/repeatSelected.png" alt="" />
+                    ) : loop == "ONE" ? (
+                        <img className='w-6' src="./icons/repeat1.png" alt="" />
+                    ) : (
+                        <img className='w-6' src="./icons/repeat.png" alt="" />
+                    )}
+                    <div className='absolute inset-0 bg-black opacity-20 hover:opacity-0'></div>
+                </div>
+
+            </div>
+            <div className='flex flex-col-reverse mr-10'>
+                <input
+                    className='appearance-none h-1 w-20 bg-green-300 rounded-full outline-none cursor-pointer'
+                    type="range" min={0} max={100} value={volume} step={2} onChange={
+                        (e) => {
+                            const newVolume = parseFloat(e.target.value);
+                            setVolume(newVolume);
+                        }} />
+            </div>
+
             {/* <div className="">
                 <ReactPlayer url={BASE_URL + "/stream/" + roomId} volume={(volume / 100) * defean} onReady={() => {
                     console.log("anas")

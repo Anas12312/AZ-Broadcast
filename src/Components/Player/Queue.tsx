@@ -15,7 +15,7 @@ export default function Queue({ deleteTrack, playTrack, queue, handleDragOver, h
     return (
         <div className='flex flex-col h-full w-full justify-center items-center'>
             <div className='text-white font-main text-2xl mt-6'>Queue</div>
-            <div className='w-full h-full flex flex-col items-center text-white bg-slate-500 mt-10 overflow-y-scroll'>
+            <div className='w-full h-full flex flex-col items-center text-white mt-10 overflow-y-scroll'>
                 {queue?.map((track: track, index: number) => {
                     return <Track
                         id={track.id}
