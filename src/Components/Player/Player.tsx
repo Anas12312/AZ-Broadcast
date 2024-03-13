@@ -73,10 +73,12 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId, 
                 currentTrack ?
                     (
                         <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 hover:bg-slate-100 w-[15%]'>
-                            <div className='font-bold text-base w-full'>
+                            <div className='font-bold text-base w-full overflow-hidden'>
+                                <div className='marquee'>
                                 {
-                                    currentTrack?.name
+                                    currentTrack?.name + "       "
                                 }
+                                </div>
                             </div>
                             <div className='flex justify-between'>
                                 <div className=''>
