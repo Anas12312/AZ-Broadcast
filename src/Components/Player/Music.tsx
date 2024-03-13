@@ -1,24 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Player from './Player'
 import Queue from './Queue'
 import { track } from './Track'
 import { BASE_URL, socket } from '../../Socket/socket'
 import Search from './Search'
-
-export default function Music({ roomId }: { roomId: string }) {
-    const [queue, setQueue] = useState<track[]>([])
-    const [currentTrack, setCurrentTrack] = useState(0)
-    const [busy, setBusy] = useState(false)
-    const audioRef = useRef<HTMLAudioElement>(null)
+interface props { 
+    roomId: string, 
+    audioRef: React.RefObject<HTMLAudioElement> 
+    busy: boolean
+    setBusy: Function
+    refreshQueue: Function
+    queue: track[]
+    currentTrack: number
+    setQueue: Function
+    setCurrentTrack: Function
+}
+export default function Music({ roomId, audioRef, busy, setBusy, refreshQueue, queue, currentTrack, setCurrentTrack, setQueue }: props) {
+    
     audioRef.current?.addEventListener("loadeddata", () => setBusy(false))
-    const refreshQueue = async () => {
-        const response = await fetch(BASE_URL + '/queue/' + roomId + "/" + socket.id)
-        const newQueue = await response.json()
-        if(newQueue.tracks) {
-            setQueue(newQueue.tracks)
-            setCurrentTrack(newQueue.currentTrack)
-        } 
-    }
+    
     const handleDragStart = (event: React.DragEvent<HTMLDivElement>, index: number) => {
         event.dataTransfer.setData('index', index.toString());
     };
@@ -83,12 +82,12 @@ export default function Music({ roomId }: { roomId: string }) {
         refreshQueue()
     }, [])
     return (
-        <div className='bg-slate-800 h-full w-[53%]'>
-            <div className='w-full h-[86%] flex'>
+        <div className='h-full w-[53%]'>
+            <div className='w-full h-full flex'>
                 <div className='w-[60%]'>
                     <Search refreshQueue={refreshQueue} roomId={roomId} queue={queue} />
                 </div>
-                <div className=' w-[40%] border-l '>
+                <div className=' w-[40%] '>
                     <Queue
                         handleDragOver={handleDragOver}
                         handleDragStart={handleDragStart}
@@ -100,15 +99,6 @@ export default function Music({ roomId }: { roomId: string }) {
                         deleteTrack={deleteTrack}
                     />
                 </div>
-            </div>
-            <div className='w-full h-[14%] bg-black'>
-                <Player 
-                    audioRef={audioRef} 
-                    roomId={roomId} 
-                    refreshQueue={refreshQueue}
-                    busy={busy}
-                    setBusy={setBusy}
-                />
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import SettingsModal from '../Modals/SettingsModal';
 
 
@@ -17,8 +17,8 @@ export default function ProfilePanel({ leaveRoom, username, image, setUsername, 
         setSettingModal(true);
     }
     return (
-        < div className='absolute bottom-0 left-0 h-28 w-[17%] bg-[#383a40]' >
-             <SettingsModal
+        <div className='h-[73px] w-full ' >
+            <SettingsModal
                 isOpen={settingsModal}
                 setIsOpen={setSettingModal}
                 oldUsername={username}
@@ -26,28 +26,13 @@ export default function ProfilePanel({ leaveRoom, username, image, setUsername, 
                 setImage={setImage}
                 setUsername={setUsername}
             />
-            {/* Status */}
-            < div className='h-[45%] bg-[#15181f] flex justify-between items-center px-3' >
-
-                <div className='text-green-600 font-main select-none hover:cursor-pointer hover:underline'>
-                    Status
-                </div>
-
-
-                <div onClick={() => {
-                    leaveRoom()
-                }} className='w-8 h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
-                    <img src='./icons/hangup.svg' className='w-6 h-6' />
-                </div>
-            </div >
-
             {/* Profile & Mute */}
-            < div className='h-[55%] pl-2 flex justify-center items-center border-t border-slate-800 bg-slate-950' >
+            < div className='h-[100%] pl-2 flex justify-between items-center ' >
 
                 <div className='w-[50%] flex justify-start space-x-3 items-center pl-2 h-10 rounded-md hover:bg-slate-800 hover:cursor-pointer'>
 
                     <div className='rounded-full w-8 h-8'>
-                        <img src={image} className='w-8 h-8 rounded-full object-cover'/>
+                        <img src={image} className='w-8 h-8 rounded-full object-cover' />
                     </div>
 
                     <div className='text-xs font-main text-white select-none truncate ' title={username}>
@@ -56,15 +41,14 @@ export default function ProfilePanel({ leaveRoom, username, image, setUsername, 
 
                 </div>
 
-                <div className='w-[50%] h-full px-2 flex justify-center items-center'>
-                    <div className='w-full h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer select-none'>
-                        <img src='./icons/mic.svg' className='w-6 h-6' />
-                    </div>
-                    <div className='w-full h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer select-none'>
-                        <img src='./icons/headset.svg' className='w-6 h-6' />
-                    </div>
-                    <div onClick={openSettingModal} className='w-full h-[65%] rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer select-none'>
+                <div className='w-[50%] h-full px-2 flex justify-end items-center'>
+                    <div onClick={openSettingModal} className='p-1 rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer select-none'>
                         <img src={'./icons/settings.svg'} className='w-6 h-6' />
+                    </div>
+                    <div onClick={() => {
+                        leaveRoom()
+                    }} className='p-1 rounded-md flex justify-center items-center hover:bg-slate-800 hover:cursor-pointer'>
+                        <img src='./icons/hangup.svg' className='w-6 h-6' />
                     </div>
 
                 </div>

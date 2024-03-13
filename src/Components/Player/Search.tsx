@@ -46,8 +46,8 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
             <div className='w-full flex justify-center mt-6'>
                 <input
                     type="text"
-                    className='w-[95%] rounded-sm pl-2 text-base h-10'
-                    placeholder='Search a youtube video'
+                    className='w-[95%] rounded-3xl pl-3 text-base h-10'
+                    placeholder='What do you want to play?'
                     value={searchTerm}
                     onChange={(e) => { setSearchTerm(e.target.value) }}
                     onKeyDown={(e) => {
@@ -62,7 +62,7 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
                     <RotatingLines />
                 </div>
             ) : (
-                <div className='mt-8 h-full border overflow-y-scroll'>
+                <div className='mt-8 h-full overflow-y-scroll'>
                     {
                         searchResults.map((searchResult: track, index: number) => {
                             return <SearchCard

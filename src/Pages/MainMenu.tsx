@@ -85,7 +85,7 @@ function MainMenu() {
           <img className='w-[400.15px]' src='../../images/logo.png' />
         </div>
         <div className='font-main text-[36px] text-center mt-[32px] font-bold'>
-          Free video calls and meeting rooms for everyone <br></br> to talk, play music, and hangout
+          Free radio rooms for everyone to chat,  <br></br> play music, and hangout
         </div>
         <div className='w-[250px] h-[60px] flex justify-center items-center  font-main text-[24px]
                         bg-[#6D4C41] rounded-md text-white m-2 mr-6 mt-[20px] font-bold
@@ -113,7 +113,7 @@ function MainMenu() {
         </div>
         <div className=' text-red-600 font-bold'>{error}</div>
         <div className='font-main text-black text-center mt-3 text-lg font-bold'>
-          AZ Broadcast Provides secure and easy-to-use video calls and meetings <br></br>with a music player for everyone, on any device
+          AZ Broadcast Provides secure and easy-to-use music player  <br></br>  for everyone, on any device
         </div>
       </div>
     </div>

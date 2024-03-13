@@ -11,7 +11,8 @@ type chatProps = {
 }
 export function currentTime() {
     const date = new Date()
-    const minutes = date.getMinutes()
+    const minutes = date.getMinutes() > 9 ? date.getMinutes() :  "0" + date.getMinutes()
+
     const time = date.getHours() > 12? date.getHours() - 12 + ":" + minutes + " pm": date.getHours() + ":" + minutes 
     return time
 }
@@ -21,7 +22,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
 
     return (
 
-        <div className='bg-[#1e1f22] h-[92%] w-[30%] font-main'>
+        <div className='bg-[#1e1f22] h-full w-[30%] font-main'>
             <div id='messages' className='w-full h-[92%] pt-20 flex flex-col justify-start items-center space-y-1 overflow-y-scroll'>
                 {
                     messages.map((message, i) => {
@@ -37,7 +38,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                             )
                         } else if (message.type === "SELF") {
                             return (
-                                <Message content={message.text} username={'You'} image={message.image} timeStamp={currentTime()} key={i}/>
+                                <Message content={message.text} username={'You'} image={message.image} timeStamp={message.time} key={i}/>
                             )
                         }
                     })
