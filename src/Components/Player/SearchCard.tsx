@@ -1,10 +1,10 @@
-import { formatTime, track } from './Track'
+import { track } from './Track'
 interface props extends track {
     index: number,
     onClick: Function
     exist: boolean
 }
-export default function SearchCard({ name, url, thumbnail, author, duration, index, onClick, exist }: props) {
+export default function SearchCard({ name, url, thumbnail, author, duration: _, index, onClick, exist }: props) {
     const selectedStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     const normalStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     return (
