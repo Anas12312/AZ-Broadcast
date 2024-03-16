@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { track } from './Track'
 import { BASE_URL, socket } from '../../Socket/socket'
 import SearchCard from './SearchCard'
-import {BallTriangle, Circles, ColorRing, FidgetSpinner} from 'react-loader-spinner'
+import {ColorRing} from 'react-loader-spinner'
 interface props {
     refreshQueue: Function,
     roomId: string
