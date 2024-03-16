@@ -84,10 +84,10 @@ export default function Music({ roomId, audioRef, setBusy, refreshQueue, queue, 
     return (
         <div className='h-full w-[53%]'>
             <div className='w-full h-full flex'>
-                <div className='w-[60%]'>
+                <div className='w-[40%]'>
                     <Search refreshQueue={refreshQueue} roomId={roomId} queue={queue} />
                 </div>
-                <div className=' w-[40%] '>
+                <div className=' w-[60%] '>
                     <Queue
                         handleDragOver={handleDragOver}
                         handleDragStart={handleDragStart}

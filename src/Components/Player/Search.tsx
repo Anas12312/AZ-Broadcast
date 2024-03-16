@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { track } from './Track'
 import { BASE_URL, socket } from '../../Socket/socket'
 import SearchCard from './SearchCard'
-import { RotatingLines } from 'react-loader-spinner'
+import {BallTriangle, Circles, ColorRing, FidgetSpinner} from 'react-loader-spinner'
 interface props {
     refreshQueue: Function,
     roomId: string
@@ -42,11 +42,11 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
         refreshQueue()
     }
     return (
-        <div className='w-full h-full flex flex-col'>
+        <div className='w-full h-full flex flex-col '>
             <div className='w-full flex justify-center mt-6'>
                 <input
                     type="text"
-                    className='w-[95%] rounded-3xl pl-3 text-base h-10'
+                    className='w-[95%] rounded-xl pl-3 text-base h-10'
                     placeholder='What do you want to play?'
                     value={searchTerm}
                     onChange={(e) => { setSearchTerm(e.target.value) }}
@@ -58,24 +58,35 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
                 />
             </div>
             {loading ? (
-                <div className='flex justify-center items-center w-full h-full'>
-                    <RotatingLines />
+                <div className='flex flex-col items-center w-full h-full'>
+                    <div className='h-[20%]'></div>
+                    <ColorRing height={150} width={150} />
                 </div>
             ) : (
-                <div className='mt-8 h-full overflow-y-scroll'>
-                    {
-                        searchResults.map((searchResult: track, index: number) => {
-                            return <SearchCard
-                                index={index}
-                                {...searchResult}
-                                onClick={addToQueue}
-                                exist = {queue.filter((t)=>{
-                                    return t.url === searchResult.url
-                                }).length > 0}
-                            />
-                        })
-                    }
-                </div>
+                searchResults.length ? (
+                    <div className='mt-8 h-full overflow-y-scroll'>
+                        {
+                            searchResults.map((searchResult: track, index: number) => {
+                                return <SearchCard
+                                    index={index}
+                                    {...searchResult}
+                                    onClick={addToQueue}
+                                    exist={queue.filter((t) => {
+                                        return t.url === searchResult.url
+                                    }).length > 0}
+                                />
+                            })
+                        }
+                    </div>
+                ) : (
+                    <div className='mt-8 h-full flex flex-col items-center font-main text-white overflow-y-scroll'>
+                        <div className='h-[10%]'></div>
+                        <div className='text-center'>Search Something to Play <br /> on Youtube</div>
+                        <div className='relative'>
+                            <img className='w-20' src="../../../icons/youtube.png" alt="" />
+                        </div>
+                    </div>
+                )
             )}
 
         </div>
