@@ -36,13 +36,13 @@ export type Member = {
 }
 function MemberCard({ username, image = './profile.png' }: Member) {
     return (
-        <div className='flex justify-start space-x-3 items-center pl-2 h-14 w-full rounded-lg hover:bg-slate-800 hover:cursor-pointer'>
+        <div className='flex justify-start space-x-3 items-center pl-2 h-14 w-full rounded-lg hover:bg-slate-600 hover:cursor-pointer'>
 
             <div className='rounded-full w-10 h-10 flex items-center justify-center'>
                 <img src={image} className='w-10 h-10 rounded-full object-cover' />
             </div>
 
-            <div className='font-main text-white select-none truncate max-w-[70%]'>
+            <div className='text-white font-thin select-none truncate max-w-[70%]'>
                 {username}
             </div>
 
