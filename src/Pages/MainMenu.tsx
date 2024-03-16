@@ -6,6 +6,8 @@ function MainMenu() {
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
+  const _1 = 1;
+  console.log(_1);
   // const [username, _setUsername] = useState(Cookies.get("username") || 'Not Loaded')
   // const [image, _setImage] = useState(Cookies.get("image") || '')
   // const onSubmitUserData = () => {
