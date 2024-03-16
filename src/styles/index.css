@@ -38,7 +38,7 @@
     @apply mx-3
   }
   .trans {
-    @apply transition-all
+    @apply transition-all duration-300
   }
 }
 

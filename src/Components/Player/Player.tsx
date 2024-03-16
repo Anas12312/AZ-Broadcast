@@ -31,6 +31,7 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId, 
     const repeat = () => {
         if (loop == "ALL") {
             setLoop("ONE")
+            fetch
         } else if (loop == "ONE") {
             setLoop("NONE")
         } else {
@@ -72,35 +73,40 @@ export default function Player({ setBusy, busy, refreshQueue, audioRef, roomId, 
             {
                 currentTrack ?
                     (
-                        <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 hover:bg-slate-100 w-[15%]'>
-                            <div className='font-bold text-base w-full overflow-hidden'>
-                                <div className='marquee'>
-                                {
-                                    currentTrack?.name + "       "
-                                }
-                                </div>
+                        <div className='flex items-center mr-10 text-white text-xs justify-start ml-5 w-[20%]'>
+                            <div className='w-2/5'>
+                                <img className='w-[80%]' src={currentTrack.thumbnail} alt="" />
                             </div>
-                            <div className='flex justify-between'>
-                                <div className=''>
-                                    {
-                                        currentTrack?.author
-                                    }
+                            <div className='flex flex-col w-3/5 ml-2'>
+                                <div className='font-bold text-base w-full overflow-hidden'>
+                                    <div className='marquee'>
+                                        {
+                                            currentTrack?.name + "       "
+                                        }
+                                    </div>
                                 </div>
-                                <div className=''>
-                                    {
-                                        formatTime(currentTrack?.duration!)
-                                    }
+                                <div className='flex justify-between'>
+                                    <div className=''>
+                                        {
+                                            currentTrack?.author
+                                        }
+                                    </div>
+                                    <div className=''>
+                                        {
+                                            formatTime(currentTrack?.duration!)
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     ) :
                     (
-                        <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 hover:bg-slate-100 w-[25%]'>
+                        <div className='flex flex-col mr-10 text-white text-xs justify-center ml-5 w-[25%]'>
                             <div className='font-bold text-base w-full'>
-                               No track is currently playing
+                                No track is currently playing
                             </div>
                             <div className='flex justify-between'>
-                                
+
                             </div>
                         </div>
                     )}

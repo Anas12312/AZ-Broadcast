@@ -28,7 +28,7 @@ export default function Chat({ messages, sendMessage }: chatProps) {
                     messages.map((message, i) => {
                         if (message.type === "GENERAL") {
                             return (
-                                <div className='w-full text-center my-2 flex justify-center items-center font-main font-bold text-white' key={i}>
+                                <div className='w-full text-center text-sm my-2 flex justify-center items-center font-main font-bold text-white' key={i}>
                                     {message.text}
                                 </div>
                             )
@@ -73,7 +73,7 @@ type Message = {
 }
 function Message({ username, image, content, timeStamp }: Message) {
     return (
-        <div className='w-full min-h-14 hover:bg-slate-700 flex justify-start items-center pl-3'>
+        <div className='w-full min-h-14 hover:bg-slate-700 flex justify-start items-center pl-3 text-sm'>
 
             <div className='rounded-full w-8 h-8 hover:cursor-pointer'>
                 <img src={image} className='w-8 h-8 rounded-full object-cover select-none' />
@@ -81,10 +81,10 @@ function Message({ username, image, content, timeStamp }: Message) {
 
             <div className='w-full h-full pl-3 pr-7 mx-1  justify-center items-start text-white'>
                 <div>
-                    <span className='w-fit text-slate-300 font-main select-none hover:underline hover:cursor-pointer'>
+                    <span className='w-fit text-white font-bold font-main select-none hover:underline hover:cursor-pointer'>
                         {username}
                     </span>
-                    <span className='select-none pl-2 text-xs text-slate-400'>
+                    <span className='select-none pl-2 text-xs text-white'>
                         {timeStamp}
                     </span>
                 </div>

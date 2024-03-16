@@ -5,22 +5,43 @@ interface props extends track {
     exist: boolean
 }
 export default function SearchCard({ name, url, thumbnail, author, duration, index, onClick, exist }: props) {
-    const selectedStyle = 'relative w-full h-20 mt-1 text-white bg-green-700 hover:bg-slate-400 cursor-pointer p-2 flex items-center'
-    const normalStyle = 'relative w-full h-20 mt-1 text-white bg-slate-700 hover:bg-slate-400 cursor-pointer p-2 flex items-center'
+    const selectedStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
+    const normalStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     return (
         <div
             key={index}
             onClick={() => {
                 onClick(url)
             }}
-            className={exist? selectedStyle : normalStyle}>
-            <div>
-                <img className='w-28' src={thumbnail} alt="" />
-            </div>
-            <div className='ml-2 flex flex-col h-full w-[60%]'>
+            className={exist ? selectedStyle : normalStyle}>
+            {exist ? (
+                <div className='w-[100%] h-full flex justify-center relative'>
+                    <div className='absolute z-10 trans flex flex-col justify-center items-center w-full h-full'>
+                        <img className='block group-hover:hidden w-16' src="../../../icons/correct.png" alt="" />
+                        <img className='hidden group-hover:block w-16' src="../../../icons/delete.png" alt="" />
+                        <div className='block group-hover:hidden font-bold'>Added</div>
+                        <div className='hidden group-hover:block font-bold'>Remove from Queue</div>
+                    </div>
+                    <div className='w-[85%] h-full flex justify-center relative'>
+                        <img className='w-full rounded-xl brightness-[0.25] group-hover:scale-105 trans' src={thumbnail} alt="" />
+                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
+                    </div>
+                </div>
+            ) : (
+                <div className='w-[100%] h-full flex relative justify-center'>
+                    <div className='absolute scale-0 group-hover:scale-100 z-10 trans flex flex-col justify-center items-center w-full h-full'>
+                        <img className=' w-16' src="../../../icons/add.png" alt="" />
+                        <div className='font-bold'>Add to Queue</div>
+                    </div>
+                    <div className='w-[85%] h-full flex justify-center relative'>
+                        <img className='w-full rounded-xl group-hover:scale-105 group-hover:brightness-[0.25] trans z-0' src={thumbnail} alt="" />
+                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
+                    </div>
+                </div>
+            )}
+            <div className='mt-2 flex flex-col h-full w-[85%]'>
                 <div className='text-base font-bold truncate'>{name}</div>
                 <div className='text-sm'>{author}</div>
-                <div className='text-sm'>{formatTime(duration)}</div>
             </div>
         </div>
     )
