@@ -79,7 +79,7 @@ function MainMenu() {
       >Save</button>
     </form>
 
-    <div className='w-screen h-screen text-main'>
+    <div className='w-screen h-screen text-main bg-white'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
         <div className='w-full text-xl font-bold flex justify-center items-center mt-[50px]'>
           <img className='w-[400.15px]' src='../../images/logo.png' />
