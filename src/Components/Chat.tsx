@@ -12,8 +12,8 @@ type chatProps = {
 export function currentTime() {
     const date = new Date()
     const minutes = date.getMinutes() > 9 ? date.getMinutes() :  "0" + date.getMinutes()
-
-    const time = date.getHours() > 12? date.getHours() - 12 + ":" + minutes + " pm": date.getHours() + ":" + minutes 
+    const hours = date.getHours() == 0? 12:date.getHours()
+    const time = hours > 12? hours - 12 + ":" + minutes + " pm": hours + ":" + minutes + " am"
     return time
 }
 export default function Chat({ messages, sendMessage }: chatProps) {
