@@ -80,7 +80,7 @@ function MainMenu() {
       >Save</button>
     </form> */}
 
-    <div className='w-screen h-screen text-main bg-white'>
+    <div className='w-screen h-screen text-main bg-gradient-to-tl from-gray-800  to-black text-white select-none'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
         <div className='w-full text-xl font-bold flex justify-center items-center mt-[50px]'>
           <img className='w-[400.15px]' src='../../images/logo.png' />
@@ -89,12 +89,12 @@ function MainMenu() {
           Free radio rooms for everyone to chat,  <br></br> play music, and hangout
         </div>
         <div className='w-[250px] h-[60px] flex justify-center items-center  font-main text-[24px]
-                        bg-[#6D4C41] rounded-md text-white m-2 mr-6 mt-[20px] font-bold
-                        hover:cursor-pointer hover:shadow hover:bg-[#643c2f]'
+                        bg-accent rounded-md text-white m-2 mr-6 mt-[20px] font-bold
+                        hover:cursor-pointer hover:shadow hover:bg-accent-alt'
           onClick={createRoom}>Create Room <img className='w-[40px] ml-4' src="../../icons/plus.png" alt="" /></div>
         <div className='flex items-center m-[20px]'>
           <input
-            className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-l-[10px] text-main'
+            className='w-[21.5rem] h-12 p-2 pb-3 border border-black rounded-l-[10px] text-main text-black bg-gray-100'
             value={code}
             placeholder='Type the ID of the room'
             onChange={(e) => {
@@ -106,14 +106,14 @@ function MainMenu() {
               }
             }}
           />
-          <div className='w-[100px] h-12 rounded-r-[10px] bg-[#6D4C41]
+          <div className='w-[100px] h-12 rounded-r-[10px] bg-accent
                         flex justify-center items-center 
                         text-white text-main text-[24px]
-                        hover:cursor-pointer hover:bg-[#643c2f] font-main'
+                        hover:cursor-pointer hover:bg-accent-alt font-main'
             onClick={joinRoom}>Join</div>
         </div>
         <div className=' text-red-600 font-bold'>{error}</div>
-        <div className='text-black text-center mt-3 text-lg'>
+        <div className='text-center mt-3 text-lg font-main'>
           AZ Broadcast Provides secure and easy-to-use music player  <br></br>  for everyone, on any device
         </div>
       </div>
