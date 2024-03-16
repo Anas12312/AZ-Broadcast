@@ -83,7 +83,7 @@ function MainMenu() {
     <div className='w-screen h-screen text-main bg-gradient-to-tl from-gray-800  to-black text-white select-none'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
         <div className='w-full text-xl font-bold flex justify-center items-center mt-[50px]'>
-          <img className='w-[400.15px]' src='../../images/logo.png' />
+          <img className='w-[400.15px]' src='../../images/logo-2.png' />
         </div>
         <div className='font-main text-[36px] text-center mt-[32px] font-bold'>
           Free radio rooms for everyone to chat,  <br></br> play music, and hangout
