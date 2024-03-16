@@ -24,7 +24,6 @@ export default function SearchCard({ name, url, thumbnail, author, duration, ind
                     </div>
                     <div className='w-[85%] h-full flex justify-center relative'>
                         <img className='w-full rounded-xl brightness-[0.25] group-hover:scale-105 trans' src={thumbnail} alt="" />
-                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
                     </div>
                 </div>
             ) : (
@@ -35,7 +34,6 @@ export default function SearchCard({ name, url, thumbnail, author, duration, ind
                     </div>
                     <div className='w-[85%] h-full flex justify-center relative'>
                         <img className='w-full rounded-xl group-hover:scale-105 group-hover:brightness-[0.25] trans z-0' src={thumbnail} alt="" />
-                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
                     </div>
                 </div>
             )}

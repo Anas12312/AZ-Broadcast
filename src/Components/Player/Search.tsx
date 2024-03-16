@@ -15,7 +15,7 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
     const searchYT = async () => {
         if (searchTerm) {
             setLoading(true)
-            const results = await fetch(BASE_URL + '/yt', {
+            const results = await fetch(BASE_URL + '/yt2', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
