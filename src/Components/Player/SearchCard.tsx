@@ -1,10 +1,10 @@
-import { formatTime, track } from './Track'
+import { track } from './Track'
 interface props extends track {
     index: number,
     onClick: Function
     exist: boolean
 }
-export default function SearchCard({ name, url, thumbnail, author, duration, index, onClick, exist }: props) {
+export default function SearchCard({ name, url, thumbnail, author, duration: _, index, onClick, exist }: props) {
     const selectedStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     const normalStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     return (
@@ -24,7 +24,6 @@ export default function SearchCard({ name, url, thumbnail, author, duration, ind
                     </div>
                     <div className='w-[85%] h-full flex justify-center relative'>
                         <img className='w-full rounded-xl brightness-[0.25] group-hover:scale-105 trans' src={thumbnail} alt="" />
-                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
                     </div>
                 </div>
             ) : (
@@ -35,7 +34,6 @@ export default function SearchCard({ name, url, thumbnail, author, duration, ind
                     </div>
                     <div className='w-[85%] h-full flex justify-center relative'>
                         <img className='w-full rounded-xl group-hover:scale-105 group-hover:brightness-[0.25] trans z-0' src={thumbnail} alt="" />
-                        <div className='text-xs absolute bottom-1 right-1 p-0.5 flex justify-center items-center bg-opacity-80 rounded-md font-bold bg-black'>{formatTime(duration)}</div>
                     </div>
                 </div>
             )}
