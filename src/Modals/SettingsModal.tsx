@@ -94,7 +94,7 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
         appElement={document.getElementById('root')!}
         isOpen={isOpen}
         className='shadow-xl h-fit w-1/3 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2
-         absolute flex flex-col justify-center items-center border p-5 rounded-md bg-slate-800 text-white'
+         absolute flex flex-col justify-center items-center border p-5 rounded-md bg-slate-600 text-white'
         onRequestClose={closeModal}
         shouldFocusAfterRender={false}
         closeTimeoutMS={200}
@@ -126,8 +126,8 @@ export default function SettingsModal({ isOpen, setIsOpen, oldUsername, OldImage
 
 
         <div className='w-full'>
-          <div className='w-full flex justify-center bg-secondary-3 rounded-md border border-primary-1 p-2 mb-1'>
-            <div className='relative w-60 h-60 flex justify-center items-center rounded-full border-4 border-white'>
+          <div className='w-full flex justify-center bg-secondary-3 rounded-md p-2 mb-1'>
+            <div className='relative w-60 h-60 flex justify-center items-center rounded-full '>
               <img id='preview' className='object-cover w-full h-full flex-shrink-0 rounded-full' src={image}
               />
             </div>

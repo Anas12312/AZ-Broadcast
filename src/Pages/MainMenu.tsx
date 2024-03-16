@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { socket } from '../Socket/socket';
-import Cookies from 'cookies-js';
 function MainMenu() {
   const nav = useNavigate();
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
-  const [image, setImage] = useState(Cookies.get("image") || '')
-  const onSubmitUserData = () => {
-    socket.emit('change_name', { username, image });
-    Cookies.set("image", image)
-    Cookies.set("username", username)
-  }
+  // const [username, _setUsername] = useState(Cookies.get("username") || 'Not Loaded')
+  // const [image, _setImage] = useState(Cookies.get("image") || '')
+  // const onSubmitUserData = () => {
+  //   socket.emit('change_name', { username, image });
+  //   Cookies.set("image", image)
+  //   Cookies.set("username", username)
+  // }
 
   const createRoom = () => {
     socket.emit('create');
@@ -55,7 +54,7 @@ function MainMenu() {
     //   nav('/test')
     // }
   }}>
-    <form
+    {/* <form
       className='flex flex-col absolute bottom-0 left-0 space-y-1 bg-slate-700 p-4 border border-slate-800 rounded-tr-xl '
 
     >
@@ -77,7 +76,7 @@ function MainMenu() {
         className='w-full bg-slate-200 border-2 border-slate-800 rounded-md'
         onClick={onSubmitUserData}
       >Save</button>
-    </form>
+    </form> */}
 
     <div className='w-screen h-screen text-main'>
       <div className='w-full h-full flex justify-start items-center flex-col'>
@@ -108,11 +107,11 @@ function MainMenu() {
           <div className='w-[100px] h-12 rounded-r-[10px] bg-[#6D4C41]
                         flex justify-center items-center 
                         text-white text-main text-[24px]
-                        hover:cursor-pointer hover:bg-[#643c2f]'
+                        hover:cursor-pointer hover:bg-[#643c2f] font-main'
             onClick={joinRoom}>Join</div>
         </div>
         <div className=' text-red-600 font-bold'>{error}</div>
-        <div className='font-main text-black text-center mt-3 text-lg font-bold'>
+        <div className='text-black text-center mt-3 text-lg'>
           AZ Broadcast Provides secure and easy-to-use music player  <br></br>  for everyone, on any device
         </div>
       </div>
