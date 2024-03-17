@@ -30,11 +30,19 @@ function MainMenu() {
     }
 
     function onJoined(data: any) {
-      nav('/room/' + data.roomId)
+      nav('/room', {
+        state: {
+          roomId: data.roomId
+        }
+      })
     }
 
     function onCreated(data: any) {
-      nav('/room/' + data.roomId)
+      nav('/room', {
+        state: {
+          roomId: data.roomId
+        }
+      })
     }
 
     socket.on('error', onError);
