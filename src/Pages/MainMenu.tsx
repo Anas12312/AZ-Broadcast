@@ -122,7 +122,7 @@ function MainMenu() {
         </div>
         <div className=' text-red-600 font-bold'>{error}</div>
         <div className='text-center mt-3 text-lg font-main'>
-          AZ Broadcast Provides secure and easy-to-use music player  <br></br>  for everyone, on any device
+          AZ Broadcast Provides secure and easy-to-use audio player  <br></br>  for everyone, on any device
         </div>
       </div>
     </div>
