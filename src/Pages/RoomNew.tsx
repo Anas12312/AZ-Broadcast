@@ -13,7 +13,8 @@ export default function RoomNew() {
 
   const [members, setMembers] = useState<Member[]>([])
   const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
-  const [roomId, setRoomId] = useState('')
+  const { state:params } = useLocation()
+  const roomId = params.roomId
   const nav = useNavigate()
   const [busy, setBusy] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -33,8 +34,6 @@ export default function RoomNew() {
     const { state: params } = useLocation();
     if(!params.roomId) {
       nav('/')
-    }else {
-      setRoomId(params.roomId)
     }
   }, [])
   useEffect(() => {
