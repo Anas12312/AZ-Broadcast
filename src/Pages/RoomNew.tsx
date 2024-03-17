@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BASE_URL, socket } from '../Socket/socket'
 import Music from '../Components/Player/Music'
 import Cookies from 'cookies-js';
@@ -13,8 +13,8 @@ export default function RoomNew() {
 
   const [members, setMembers] = useState<Member[]>([])
   const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
-  const { state:params } = useLocation()
-  const roomId = params.roomId
+  const {state: params} = useLocation();
+  const roomId = params.roomId;
   const nav = useNavigate()
   const [busy, setBusy] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -30,12 +30,7 @@ export default function RoomNew() {
   }
   const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
   const [image, setImage] = useState(Cookies.get("image") || '')
-  useEffect(() => {
-    const { state: params } = useLocation();
-    if(!params.roomId) {
-      nav('/')
-    }
-  }, [])
+
   useEffect(() => {
     function onMemberJoined(data: any) {
       setMembers(data.members)
@@ -182,8 +177,8 @@ export default function RoomNew() {
     <div className='relative flex flex-col bg-gradient-to-bl from-accent to-primary-alt  w-full h-full'>
       <div className='w-full flex h-[90%]'>
         {/* Members */}
-        <Members
-          members={members}
+        <Members 
+          members={members} 
           image={image}
           setImage={setImage}
           leaveRoom={leaveRoom}
@@ -193,8 +188,8 @@ export default function RoomNew() {
 
 
         {/* Playlist */}
-        <Music
-          roomId={roomId}
+        <Music 
+          roomId={roomId} 
           audioRef={audioRef}
           busy={busy}
           currentTrack={currentTrack}
