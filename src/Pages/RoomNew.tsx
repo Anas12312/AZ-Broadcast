@@ -32,6 +32,10 @@ export default function RoomNew() {
   const [image, setImage] = useState(Cookies.get("image") || '')
 
   useEffect(() => {
+    if(!roomId) {
+      nav('/')
+      return
+    }
     function onMemberJoined(data: any) {
       setMembers(data.members)
       setMessages(oldState => [...oldState, {
