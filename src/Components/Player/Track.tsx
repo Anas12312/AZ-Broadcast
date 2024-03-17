@@ -47,7 +47,10 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                         <img className='w-40 rounded-lg brightness-[0.25]' src={thumbnail} alt="" />
                     </div>
                     <div className='ml-2 flex flex-col w-[60%]'>
-                        <div className='text-base font-bold truncate'>{name}</div>
+                        <div className='font-bold text-base w-full overflow-hidden'>
+                            <div className='marquee'>{name}</div>
+                        </div>
+                        {/* <div className='text-base font-bold truncate'>{name}</div> */}
                         <div className='text-sm'>{author}</div>
                         <div className='text-sm'>{formatTime(duration)}</div>
                     </div>

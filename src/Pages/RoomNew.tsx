@@ -32,10 +32,7 @@ export default function RoomNew() {
   const [image, setImage] = useState(Cookies.get("image") || '')
 
   useEffect(() => {
-    console.log("first")
-    console.log(roomId)
     if(!roomId) {
-      console.log("second")
       nav('/')
       return
     }
