@@ -11,7 +11,7 @@ export default function AppRouter() {
       <Routes>
         <Route path='/' element={<MainMenu />} />
         <Route path='/test' element={<Test />} />
-        <Route path='/room/:id' element={<RoomNew />} />
+        <Route path='/room' element={<RoomNew />} />
       </Routes>
     </HashRouter>
   )

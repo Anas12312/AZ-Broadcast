@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { BASE_URL, socket } from '../Socket/socket'
 import Music from '../Components/Player/Music'
 import Cookies from 'cookies-js';
@@ -13,13 +13,12 @@ export default function RoomNew() {
 
   const [members, setMembers] = useState<Member[]>([])
   const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
-  const params = useParams();
+  const [roomId, setRoomId] = useState('')
   const nav = useNavigate()
   const [busy, setBusy] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const [queue, setQueue] = useState<track[]>([])
   const [currentTrack, setCurrentTrack] = useState(0)
-  const roomId = params.id!;
   const refreshQueue = async () => {
     const response = await fetch(BASE_URL + '/queue/' + roomId + "/" + socket.id)
     const newQueue = await response.json()
@@ -30,7 +29,14 @@ export default function RoomNew() {
   }
   const [username, setUsername] = useState(Cookies.get("username") || 'Not Loaded')
   const [image, setImage] = useState(Cookies.get("image") || '')
-
+  useEffect(() => {
+    const { state: params } = useLocation();
+    if(!params.roomId) {
+      nav('/')
+    }else {
+      setRoomId(params.roomId)
+    }
+  }, [])
   useEffect(() => {
     function onMemberJoined(data: any) {
       setMembers(data.members)
@@ -177,8 +183,8 @@ export default function RoomNew() {
     <div className='relative flex flex-col bg-gradient-to-bl from-accent to-primary-alt  w-full h-full'>
       <div className='w-full flex h-[90%]'>
         {/* Members */}
-        <Members 
-          members={members} 
+        <Members
+          members={members}
           image={image}
           setImage={setImage}
           leaveRoom={leaveRoom}
@@ -188,8 +194,8 @@ export default function RoomNew() {
 
 
         {/* Playlist */}
-        <Music 
-          roomId={roomId} 
+        <Music
+          roomId={roomId}
           audioRef={audioRef}
           busy={busy}
           currentTrack={currentTrack}
