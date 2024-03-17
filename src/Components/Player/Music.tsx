@@ -53,6 +53,12 @@ export default function Music({ roomId, audioRef, setBusy, refreshQueue, queue, 
         fetch(BASE_URL + '/remove/' + roomId + "/" + socket.id + "/" + id)
         // refreshQueue()
     }
+    const deleteTrackByURL = async (url: string) => {
+        const id = queue.filter((t) => t.url === url)?.at(0)?.id
+        if(id) {
+            deleteTrack(id)
+        }
+    }
     useEffect(() => {
         const trackAdded = () => {
             refreshQueue()
@@ -85,7 +91,12 @@ export default function Music({ roomId, audioRef, setBusy, refreshQueue, queue, 
         <div className='h-full w-[53%]'>
             <div className='w-full h-full flex'>
                 <div className='w-[40%]'>
-                    <Search refreshQueue={refreshQueue} roomId={roomId} queue={queue} />
+                    <Search 
+                        refreshQueue={refreshQueue} 
+                        roomId={roomId} 
+                        queue={queue} 
+                        deleteTrackByURL={deleteTrackByURL}
+                    />
                 </div>
                 <div className=' w-[60%] '>
                     <Queue

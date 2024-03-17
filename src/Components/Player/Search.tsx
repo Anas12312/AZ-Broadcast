@@ -7,8 +7,9 @@ interface props {
     refreshQueue: Function,
     roomId: string
     queue: track[]
+    deleteTrackByURL: Function
 }
-export default function Search({ refreshQueue, roomId, queue }: props) {
+export default function Search({ refreshQueue, roomId, queue, deleteTrackByURL }: props) {
     const [searchResults, setSearchResults] = useState<track[]>([])
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
@@ -71,6 +72,7 @@ export default function Search({ refreshQueue, roomId, queue }: props) {
                                     index={index}
                                     {...searchResult}
                                     onClick={addToQueue}
+                                    removeTrack={deleteTrackByURL}
                                     exist={queue.filter((t) => {
                                         return t.url === searchResult.url
                                     }).length > 0}

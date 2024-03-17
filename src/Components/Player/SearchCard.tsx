@@ -3,19 +3,19 @@ interface props extends track {
     index: number,
     onClick: Function
     exist: boolean
+    removeTrack: Function
 }
-export default function SearchCard({ name, url, thumbnail, author, duration: _, index, onClick, exist }: props) {
+export default function SearchCard({ name, url, thumbnail, author, duration: _, index, onClick, exist, removeTrack }: props) {
     const selectedStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     const normalStyle = 'relative w-full my-2 text-white cursor-pointer py-2 flex flex-col items-center justify-center group'
     return (
         <div
             key={index}
-            onClick={() => {
-                onClick(url)
-            }}
             className={exist ? selectedStyle : normalStyle}>
             {exist ? (
-                <div className='w-[100%] h-full flex justify-center relative'>
+                <div onClick={() => {
+                    removeTrack(url)
+                }} className='w-[100%] h-full flex justify-center relative'>
                     <div className='absolute z-10 trans flex flex-col justify-center items-center w-full h-full'>
                         <img className='block group-hover:hidden w-16' src="../../../icons/correct.png" alt="" />
                         <img className='hidden group-hover:block w-16' src="../../../icons/delete.png" alt="" />
@@ -27,7 +27,9 @@ export default function SearchCard({ name, url, thumbnail, author, duration: _, 
                     </div>
                 </div>
             ) : (
-                <div className='w-[100%] h-full flex relative justify-center'>
+                <div onClick={() => {
+                    onClick(url)
+                }} className='w-[100%] h-full flex relative justify-center'>
                     <div className='absolute scale-0 group-hover:scale-100 z-10 trans flex flex-col justify-center items-center w-full h-full'>
                         <img className=' w-16' src="../../../icons/add.png" alt="" />
                         <div className='font-bold'>Add to Queue</div>
