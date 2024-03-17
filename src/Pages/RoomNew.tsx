@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Members, { Member } from '../Components/Members'
 import Chat, { currentTime } from '../Components/Chat'
 import RoomInfo from '../Components/RoomInfo'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { BASE_URL, socket } from '../Socket/socket'
 import Music from '../Components/Player/Music'
 import Cookies from 'cookies-js';
