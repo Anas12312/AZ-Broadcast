@@ -14,7 +14,7 @@ export default function RoomNew() {
   const [members, setMembers] = useState<Member[]>([])
   const [messages, setMessages] = useState([] as { type: string, text: string, from: string, image: string, time: string }[])
   const {state: params} = useLocation();
-  const roomId = params.roomId;
+  const roomId = params?.roomId;
   const nav = useNavigate()
   const [busy, setBusy] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
