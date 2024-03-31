@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import Cookies from 'cookies-js';
 
 // export const BASE_URL = 'http://localhost:4000'
-export const BASE_URL = "https://webrtc-test-l40m.onrender.com";
+export const BASE_URL = "https://az-broadcast-backend.onrender.com";
 
 export const socket = io(BASE_URL);
 
