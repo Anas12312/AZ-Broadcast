@@ -74,7 +74,7 @@ export default function Track({ name, playing, url: _, deleteTrack, playTrack, i
                         <div className='hidden group-hover:block'><img className='w-5' src="../../../public/icons/drag.png" alt="" /></div>
                     </div>
                     <div className='ml-2'>
-                        <img className='w-40 rounded-lg' src={thumbnail} alt="" />
+                        <img className='w-40 rounded-lg select-none' src={thumbnail} alt="" />
                     </div>
                     <div className='ml-2 flex flex-col w-[60%]'>
                         <div className='text-base font-bold truncate'>{name}</div>
