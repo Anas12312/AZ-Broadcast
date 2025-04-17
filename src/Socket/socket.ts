@@ -2,8 +2,9 @@ import { io } from 'socket.io-client';
 import Cookies from 'cookies-js';
 
 // export const BASE_URL = 'http://localhost:4000'
+// export const BASE_URL = 'http://147.93.127.229:4000'
+export const BASE_URL = 'https://sweeping-bullfrog-scarcely.ngrok-free.app'
 // export const BASE_URL = "https://az-broadcast-backend.onrender.com";
-export const BASE_URL = 'https://chubby-wombats-train.loca.lt'
 
 export const socket = io(BASE_URL);
 
